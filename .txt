@@ -1,0 +1,2 @@
+move all keys to .env
+how to hide firebase config file

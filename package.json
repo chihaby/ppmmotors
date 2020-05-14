@@ -1,0 +1,58 @@
+{
+  "name": "dealership",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "bootstrap": "^4.4.1",
+    "firebase": "^7.14.1",
+    "lodash": "^4.17.15",
+    "mdbreact": "^4.25.4",
+    "moment": "^2.24.0",
+    "react": "^16.13.0",
+    "react-border-wrapper": "^1.0.3",
+    "react-dom": "^16.13.0",
+    "react-feather": "^2.0.3",
+    "react-lorem-ipsum": "^1.4.4",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.0",
+    "react-slick": "^0.25.2",
+    "reactstrap": "^8.4.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && firebase deploy"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-node": "^4.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1"
+  }
+}
