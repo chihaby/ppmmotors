@@ -1,62 +1,26 @@
 import React, { useContext } from 'react'
 import Post from './Post';
 import { PostsContext } from '../providers/PostsProvider';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
+import { Grid, Segment, Header } from 'semantic-ui-react';
 
 const Posts = () => {
 
   const posts = useContext(PostsContext);
 
-  const settings = {
-    dots: true,
-    speed: 500,
-    width: "100%",
-    slidesToScroll: 1,
-    adaptiveHeight: true,
-    infinite: false,
-    centerPadding: "60px",
-    slidesToShow: 1,
-    className: "center",
-    loop: false,
-    arrows: true,
-    initialSlide: 0,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            initialSlide: 0,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            infinite: true,
-            dots: true
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            initialSlide: 0
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        }
-      ]
-  };
 
   return (
-      <Slider {...settings}>
-          {posts.map(post => <Post {...post} key={post.id} />
-          )} 
-      </Slider>
+    <div style={{marginTop: '50px'}}>
+      <Segment>
+        <Header basic color='black' size='huge' style={{textAlign: 'center'}}>Listings</Header>
+      </Segment>
+      <Grid container columns={3}>
+        {posts.map(post => 
+          <Grid.Column  mobile={16} tablet={8} computer={4}>
+            <Post {...post} key={post.id} />
+          </Grid.Column>          
+        )} 
+      </Grid>
+    </div>
   )
 }
 export default Posts;

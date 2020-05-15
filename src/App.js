@@ -1,17 +1,11 @@
 import React from 'react';
 import './App.css';
-// import styled from 'styled-components';
-import Jumbo from './components/Jumbotron';
-// import ModalExampleScrollingContentForBefore from './components/BeforeModal';
-// import ModalExampleScrollingContentForAfter from './components/AfterModal';
+import Homepagelayout from './components/LandingPage';
 import Posts from './components/Posts';
 import Authentication from './components/Authentication';
 import PostPage from './components/PostPage';
-// import AddPost from './components/AddPost';
-// import { Footer } from './components/Footer';
 import {  Switch, Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
-// import Containers from './components/Containers';
 import { Footer } from './components/Footer';
 import  About from './pages/about';
 import  Services from './pages/services';
@@ -21,7 +15,7 @@ class App extends React.Component {
   render () {
       return (
         <div>
-          <Jumbo />
+          <Homepagelayout />
           <div className="main-bg">
             <Container >
                 <Authentication />
@@ -33,7 +27,6 @@ class App extends React.Component {
                   <Route exact path="/contact" component={Contact} />
                 </Switch>
             </Container>
-            {/* <Containers /> */}
           </div>
           < Footer />
         </div>

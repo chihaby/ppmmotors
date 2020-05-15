@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
-import { Button, Form, TextArea, Icon, Image, Divider } from 'semantic-ui-react';
+import { Button, Form, TextArea, Icon, Image, Divider, Label } from 'semantic-ui-react';
 
-const initialState = { title: '', preview:'', content: '', url: '', progress: 0, imageName: '', titleError: '', previewError: '', contentError: '', urlError: '' };
+const initialState = { year: '', make: '', model: '', description:'', price: '', url: '', progress: 0, imageName: '', titleError: '', descriptionError: '',  urlError: '' };
 
 class AddPost extends Component {
   state = initialState;
@@ -51,26 +51,31 @@ class AddPost extends Component {
   };
 
   validate = () => {
-    let titleError = "";
-    let previewError = "";
-    let contentError = "";
+    let yearError = "";
+    let makeError = "";
+    let modelError = "";
+    let descriptionError = "";
     let urlError = "";
+    let priceError = "";
 
-    if (!this.state.title) {
-      titleError = 'Title can not be blank'
+    if (!this.state.year) {
+      yearError = 'Year can not be blank'
     }
-    if (!this.state.preview) {
-      previewError = 'Preview can not be blank'
+    if (!this.state.make) {
+      makeError = 'Make can not be blank'
     }
-    if (!this.state.content) {
-      contentError = 'Content can not be blank'
+    if (!this.state.model) {
+      modelError = 'Model can not be blank'
+    }
+    if (!this.state.price) {
+      descriptionError = ' Price can not be blank'
     }
     if (!this.state.url) {
       urlError = 'Image not saved Click Upload button '
     }
 
-    if (titleError || previewError || contentError || urlError ) {
-      this.setState({ titleError, previewError, contentError, urlError });
+    if (yearError || makeError ||modelError ||descriptionError || urlError || priceError) {
+      this.setState({ yearError, makeError, modelError, descriptionError, urlError });
       return false;
     }
     return true;
@@ -80,12 +85,13 @@ class AddPost extends Component {
     event.preventDefault(); 
     const isValid = this.validate();
     if (isValid) {
-      const { title, preview, content, url, imageName, progress } = this.state;
+      const { year, make, model, description, url, imageName, progress } = this.state;
       const { uid, displayName, email, photoURL } = auth.currentUser || {};
       const post = {
-        title,
-        preview,
-        content,
+        year,
+        make,
+        model,
+        description,
         url,
         imageName,
         progress,
@@ -103,7 +109,7 @@ class AddPost extends Component {
   };
 
   render() {
-    const { title, preview, content, url, progress, titleError, previewError, contentError, urlError } = this.state;
+    const { year, make, model, description, url, progress, yearError, makeError, modelError, cylinders, odometer, transmition, price, urlError, priceError } = this.state;
     return (
       <div>
         <div> 
@@ -116,11 +122,11 @@ class AddPost extends Component {
             <input type="file" required multiple onChange={this.handleUploadChange} />
           </div> 
           <br />
-          <Button color='red' size='massive'
+          <Button color='primary' size='large'
             onClick={this.handleUpload}
           >
             Upload 
-          </Button>
+          </Button> (required)
           <br />
           <Divider/>
             <Image 
@@ -131,46 +137,123 @@ class AddPost extends Component {
           <div style={{fontSize: 20, color: 'red'}}>{urlError}</div>
         </div>
 
-        <div style={{textAlign: 'center' }}>
+        <div>
           <Form onSubmit={this.handleSubmit}>
+            <Label as='a' basic color='blue'>Make</Label> (required)
+            <br />
             <Form.Field>
               <input 
                 className='form'
                 type="text"
-                name="title"
-                placeholder="Title"
-                value={title}
+                name="make"
+                placeholder="Make"
+                value={make}
                 onChange={this.handleChange}
               />
             </Form.Field>
-            <div style={{fontSize: 20, color: 'red'}}>{titleError}</div>
+            <div style={{fontSize: 20, color: 'red'}}>{makeError}</div>
+
+            <Label as='a' basic color='blue'>Model</Label>(required)
+            <br />
+            <Form.Field>
+              <input
+                className='form'
+                type="text"
+                name="model"
+                placeholder="Model"
+                value={model}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+            <div style={{fontSize: 20, color: 'red'}}>{modelError}</div>
+
+            <Label as='a' basic color='blue'>Year</Label>(required)
+            <br />
+            <Form.Field>
+              <input 
+                className='form'
+                type="text"
+                pattern='[0-9]*'
+                name="year"
+                placeholder="Year"
+                value={year}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+            <div style={{fontSize: 20, color: 'red'}}>{yearError}</div>
+
+            <Label as='a' basic color='blue'>Price</Label>(required)
+            <br />
+            <Form.Field>
+              <input 
+                className='form'
+                type="text"
+                pattern='[0-9]*'
+                name="price"
+                placeholder="price"
+                value={price}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+            <div style={{fontSize: 20, color: 'red'}}>{priceError}</div>
+
+            <Label as='a' basic color='blue'>Cylinders</Label>
+            <br />
+            <Form.Field>
+              <input 
+                className='form'
+                type="text"
+                pattern='[0-9]*'
+                name="Cylinders"
+                placeholder="Cylinders"
+                value={cylinders}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+
+            <Label as='a' basic color='blue'>Odometer</Label>
+            <br />
+            <Form.Field>
+              <input 
+                className='form'
+                type="text"
+                pattern='[0-9]*'
+                name="odometer"
+                placeholder="odometer"
+                value={odometer}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+
+            <Label as='a' basic color='blue'>Transmition</Label>
+            <br />
+            <Form.Field>
+              <input 
+                className='form'
+                type="text"
+                name="transmition"
+                placeholder="transmition"
+                value={transmition}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+
+            <Label as='a' basic color='blue'>Description</Label>
+            <br />
             <Form.Field>
               <TextArea 
                 type="text" 
-                rows="5" 
+                rows="3" 
                 cols="60" 
-                name="preview"
-                placeholder="preview"
-                value={preview} 
+                name="description"
+                placeholder="description"
+                value={description} 
                 onChange={this.handleChange}
                 >
               </TextArea>
             </Form.Field>
-            <div style={{fontSize: 20, color: 'red'}}>{previewError}</div>
-            <Form.Field>
-              <TextArea 
-                type="text" 
-                rows="10" 
-                cols="60" 
-                name="content"
-                placeholder="Tell us more"
-                value={content} 
-                onChange={this.handleChange}
-                >
-              </TextArea>
-            </Form.Field>
-            <div style={{fontSize: 20, color: 'red'}}>{contentError}</div>
-            <Button className="ui primary button" type="submit" value="Create Post">Create Post</Button>
+
+            <Button className="ui primary button" type="submit" value="Create Post" size='massive'>Create Posting</Button>
           </Form>
         </div>
       </div>

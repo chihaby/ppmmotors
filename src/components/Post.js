@@ -1,35 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Header, Image, Button } from 'semantic-ui-react';
+import {Container, Image, Button, Card } from 'semantic-ui-react';
 
-const Post = ({ id, title, preview, url }) => {
+const Post = ({ id, make, year, model,  url }) => {
   return (
-
-      <>
-        <div className="slides">
-          <div >
-            <div className="img-div">
-              <Image src={url} alt="img" size='large'/>
-            </div>
-            <br />
-            <div className="title-div">
-              <Link to={`/posts/${id}`}>
-                <Header as='h1' color='violet' textAlign='center' >{title}</Header>
-              </Link>
-            </div>
-            <br />
-            <div className="preview">
-              {preview}
-            </div>
-            <br />
+      <Container>
+        <Card>
+          <Image src={url} wrapped ui={false} />
+          <Card.Content>
+            <Card.Header>{year}{' '}{make}{' '}{model}</Card.Header>
+          </Card.Content>
+          <Card.Content extra>
             <Link to={`/posts/${id}`}>
-              <Button color="violet" className="read-more">Read more</Button>
+              <Button color="blue" className="read-more">More info</Button>
             </Link>
-          </div>
-        </div>
-      </>
+          </Card.Content>
+        </Card>
+      </Container>
   );
 };
 export default Post;
-
-// style={{maxWidth: '400px', maxHeight: '400px'  }}
