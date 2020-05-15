@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import Post from './Post';
+import Homepagelayout from './LandingPage';
 import { PostsContext } from '../providers/PostsProvider';
 import { Grid, Segment, Header } from 'semantic-ui-react';
 
@@ -9,7 +10,8 @@ const Posts = () => {
 
 
   return (
-    <div style={{marginTop: '50px'}}>
+    <div >
+      <Homepagelayout />
       <Segment>
         <Header basic color='black' size='huge' style={{textAlign: 'center'}}>Listings</Header>
       </Segment>

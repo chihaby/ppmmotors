@@ -10,7 +10,7 @@ const Authentication = ({ loading }) => {
   const user = useContext(UserContext);
   if (loading) return null;
 
-  return <div style={{backgroundColor: '#D3D3D3'}}>{user ? <div>
+  return <div style={{backgroundColor: '#D3D3D3', margin: '20px'}}>{user ? <div>
         <CurrentUser {...user}/>
         <Advertisement unit='banner' centered test='Salam ô Alikom' />
         <AddPost />

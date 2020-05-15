@@ -1,8 +1,56 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import PostContent from './PostContent';
 import { firestore } from '../firebase';
 import { collectIdsAndDocs } from '../utilities';
 import { withRouter } from 'react-router-dom';
+import { signInWithGoogle } from '../firebase'
+import {
+  Button,
+  Container,
+  Menu,
+  Responsive,
+  Segment,
+  Header,
+  Visibility,
+} from 'semantic-ui-react'
+
+const getWidth = () => {
+  const isSSR = typeof window === 'undefined'
+
+  return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
+}
+
+const HomepageHeading = ({ mobile }) => (
+  <Container text>
+    <Header
+      as='h1'
+      content='Park Plaza Motors'
+      inverted
+      style={{
+        fontSize: mobile ? '2em' : '4em',
+        fontWeight: 'normal',
+        marginBottom: 0,
+        marginTop: mobile ? '1.5em' : '3em',
+      }}
+    />
+    <Header
+      as='h2'
+      content='Your local dealership'
+      inverted
+      style={{
+        fontSize: mobile ? '1.5em' : '1.7em',
+        fontWeight: 'normal',
+        marginTop: mobile ? '0.5em' : '1.5em',
+      }}
+    />
+  </Container>
+)
+
+HomepageHeading.propTypes = {
+  mobile: PropTypes.bool,
+}
+
 
 class PostPage extends Component {
   state = { post: null, comments: [] };
@@ -30,11 +78,53 @@ class PostPage extends Component {
   };
 
   render() {
+    const { fixed } = this.state
     const { post } = this.state;
     return (
-      <section className="slides body">
+      <div>
+      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+        <Visibility
+          once={false}
+          onBottomPassed={this.showFixedMenu}
+          onBottomPassedReverse={this.hideFixedMenu}
+        >
+          <Segment
+            inverted
+            textAlign='center'
+            style={{ minHeight: 100, padding: '1em 0em' }}
+            vertical
+          >
+            <Menu
+              fixed={fixed ? 'top' : null}
+              inverted={!fixed}
+              pointing={!fixed}
+              secondary={!fixed}
+              size='large'
+            >
+              <Container>
+                <Menu.Item as='a' active>
+                  Home
+                </Menu.Item>
+                <Menu.Item as='a'>Listings</Menu.Item>
+                <Menu.Item as='a'>Services</Menu.Item>
+                <Menu.Item as='a'>Contact Us</Menu.Item>
+                <Menu.Item position='right'>
+                  <Button as='a' inverted={!fixed} onClick={signInWithGoogle}>
+                    Log in
+                  </Button>
+                </Menu.Item>
+              </Container>
+            </Menu>
+          </Segment>
+        </Visibility>
+
+  
+      </Responsive>
+
+      <section >
         {post && <PostContent {...post} />}
       </section>
+      </div>
     );
   }
 }
