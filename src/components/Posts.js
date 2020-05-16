@@ -13,11 +13,11 @@ const Posts = () => {
     <div >
       <Homepagelayout />
       <Segment>
-        <Header basic color='black' size='huge' style={{textAlign: 'center'}}>Listings</Header>
+        <Header basic="true" color='black' size='huge' style={{textAlign: 'center'}}>Listings</Header>
       </Segment>
       <Grid container columns={3}>
         {posts.map(post => 
-          <Grid.Column  mobile={16} tablet={8} computer={4}>
+          <Grid.Column  mobile={16} tablet={8} computer={4} key={post.id}>
             <Post {...post} key={post.id} />
           </Grid.Column>          
         )} 

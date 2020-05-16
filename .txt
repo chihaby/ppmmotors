@@ -1,2 +1,8 @@
 move all keys to .env
 how to hide firebase config file
+
+heic (pronounced “heek”), 
+simply open up your iPhone's Settings and hit Camera. In the Camera settings, tap the Formats option. 
+On the Formats screen, select Most Compatible instead of High Efficiency
+
+Be consistent in taking photos. Always landscape mode

@@ -12,7 +12,7 @@ const Post = ({ id, make, year, model,  url }) => {
           </Card.Content>
           <Card.Content extra>
             <Link to={`/posts/${id}`}>
-              <Button color="blue" className="read-more">More info</Button>
+              <Button color="blue" className="read-more">Info</Button>
             </Link>
           </Card.Content>
         </Card>

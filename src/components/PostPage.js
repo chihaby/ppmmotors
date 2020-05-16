@@ -4,9 +4,7 @@ import PostContent from './PostContent';
 import { firestore } from '../firebase';
 import { collectIdsAndDocs } from '../utilities';
 import { withRouter } from 'react-router-dom';
-import { signInWithGoogle } from '../firebase'
 import {
-  Button,
   Container,
   Menu,
   Responsive,
@@ -108,17 +106,10 @@ class PostPage extends Component {
                 <Menu.Item as='a'>Listings</Menu.Item>
                 <Menu.Item as='a'>Services</Menu.Item>
                 <Menu.Item as='a'>Contact Us</Menu.Item>
-                <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed} onClick={signInWithGoogle}>
-                    Log in
-                  </Button>
-                </Menu.Item>
               </Container>
             </Menu>
           </Segment>
         </Visibility>
-
-  
       </Responsive>
 
       <section >

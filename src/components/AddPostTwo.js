@@ -4,7 +4,7 @@ import { Progress, Button, Form, TextArea, Icon, Image, Divider, Label, Input, M
 
 const initialState = { year: '', make: '', model: '', description:'', price: '', url: '', progress: 0, imageName: '', titleError: '', descriptionError: '',  urlError: '' };
 
-class AddPost extends Component {
+class AddPostTwo extends Component {
   state = initialState;
   
   handleUploadChange = e => {
@@ -18,7 +18,7 @@ class AddPost extends Component {
   handleUpload = e => {
     e.preventDefault(); 
     const { image } = this.state;
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    const uploadTask = storage.ref(`images/file/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -35,7 +35,7 @@ class AddPost extends Component {
       () => {
         // complete function ...
         storage
-          .ref("images")
+          .ref("images/file")
           .child(image.name)
           .getDownloadURL()
           .then(url => {
@@ -115,8 +115,9 @@ class AddPost extends Component {
       <div>
         <div> 
           <Message info>
-            <Message.Header>For consistency </Message.Header>
-            <p>hand point right outline Upload images in landscape mode</p>
+          <Message.Header>For consistency </Message.Header>
+            <p>{'\u2022'} Upload images in landscape view</p>
+            <p>{'\u2022'} Enter all entry fields for data records</p>
           </Message>
           <Divider/>
           <div>
@@ -128,7 +129,7 @@ class AddPost extends Component {
             <input type="file" required multiple onChange={this.handleUploadChange} />
           </div> 
           <br />
-          <Button color='primary' size='large'
+          <Button color='blue' size='large'
             onClick={this.handleUpload}
           >
             Save 
@@ -311,4 +312,4 @@ class AddPost extends Component {
 
   }
 
-export default AddPost;
+export default AddPostTwo;

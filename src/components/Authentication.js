@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import CurrentUser from './CurrentUser';
 import SignIn from './SignIn';
 import { UserContext } from '../providers/UserProvider';
-import AddPost from './AddPost';
+import AddPostTwo from './AddPostTwo';
 import { Advertisement } from 'semantic-ui-react';
 
 const Authentication = ({ loading }) => {
@@ -12,8 +12,8 @@ const Authentication = ({ loading }) => {
 
   return <div style={{backgroundColor: '#D3D3D3', margin: '20px'}}>{user ? <div>
         <CurrentUser {...user}/>
-        <Advertisement unit='banner' centered test='Salam ô Alikom' />
-        <AddPost />
+          <Advertisement unit='banner' color='blue' centered test='Salam ô Alikom' />
+        <AddPostTwo />
       </div> : <SignIn />}</div>;
 };
 

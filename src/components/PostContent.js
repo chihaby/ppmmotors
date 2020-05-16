@@ -10,7 +10,7 @@ const belongsToCurrentUser = (currentUser) => {
   return currentUser.uid;
 }
 
-const PostContent = ({ id, title, content, url, user, imageName }) => {
+const PostContent = ({ id, year, make, model, content, url, user, imageName }) => {
 
   const currentUser = useContext(UserContext);
   const postRef = firestore.doc(`posts/${id}`);
@@ -22,6 +22,7 @@ const remove = () => {
   imagesRef.delete().catch((error) => {
     console.error(error)
   });
+  alert("Record is deleted");
 }
 
   // const update = () => postRef.update({ title, content});
@@ -33,11 +34,11 @@ const remove = () => {
             <Icon name='home' size='big' color='blue'/>
           </Link>
         </Segment>
-        <div className="slides">
-          <div className="content-div">
-            <Image src={url} size='large' className="img-div"/>            
+        <div>
+          <Header as='h1' >{year}{' '}{make}{' '}{model}</Header>
+          <div>
+            <Image src={url} size='medium' />            
           </div>
-          <Header as='h1' color='violet' textAlign='center' style={{fontStyle: 'italic'}} >{title}</Header>
           <br />
           {content}
         </div>
