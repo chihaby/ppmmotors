@@ -1,5 +1,6 @@
 move all keys to .env
 how to hide firebase config file
+add pagination and search components from semantic-ui
 
 heic (pronounced “heek”), 
 simply open up your iPhone's Settings and hit Camera. In the Camera settings, tap the Formats option. 

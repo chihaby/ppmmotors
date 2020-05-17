@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
-import { Progress, Button, Form, TextArea, Icon, Image, Divider, Label, Input, Message } from 'semantic-ui-react';
+import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
 const initialState = { year: '', make: '', model: '', description:'', price: '', url: '', progress: 0, imageName: '', titleError: '', descriptionError: '',  urlError: '' };
 
@@ -114,18 +114,18 @@ class AddPostTwo extends Component {
     return (
       <div>
         <div> 
-          <Message info>
-          <Message.Header>For consistency </Message.Header>
-            <p>{'\u2022'} Upload images in landscape view</p>
-            <p>{'\u2022'} Enter all entry fields for data records</p>
-          </Message>
+          <Message warning>
+            <Advertisement unit='banner' centered test='Salam ô Alikom!' /><br />
+            <Message.Header>For consistency </Message.Header>
+              <p>{'\u2022'} Upload all images in landscape view.</p>
+              <p>{'\u2022'} Enter all fields for data your records.</p>
+          </Message>        
           <Divider/>
           <div>
             <Progress percent={progress} indicating />
           </div>
-          <br />
+          <Header as='h4'>Select images</Header>
           <div >
-            <Icon name='image' size='large' color='blue'/>
             <input type="file" required multiple onChange={this.handleUploadChange} />
           </div> 
           <br />
@@ -135,16 +135,14 @@ class AddPostTwo extends Component {
             Save 
           </Button> (required)
           <br />
-
-          <Divider/>
             <Image 
               size='large'
               src={url}
               alt=""
             />
           <div style={{fontSize: 20, color: 'red'}}>{urlError}</div>
+          <Divider/>
         </div>
-
         <div>
           <Form onSubmit={this.handleSubmit}>
             <Label as='a' basic color='blue'>Make</Label> (required)
@@ -303,7 +301,7 @@ class AddPostTwo extends Component {
               </TextArea>
             </Form.Field>
 
-            <Button className="ui primary button" type="submit" value="Create Post" size='massive'>Create Posting</Button>
+            <Button className="ui primary button" type="submit" value="Create Post" size='huge'>Create a listing</Button>
           </Form>
         </div>
       </div>
