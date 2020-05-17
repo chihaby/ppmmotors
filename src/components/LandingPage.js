@@ -95,7 +95,6 @@ class DesktopContainer extends Component {
                 <Menu.Item as='a' active>
                   Home
                 </Menu.Item>
-                <Menu.Item as='a'>Listings</Menu.Item>
                 <Menu.Item as='a'>Services</Menu.Item>
                 <Menu.Item as='a'>Contact Us</Menu.Item>
                 <Menu.Item position='right'>
@@ -147,7 +146,6 @@ class MobileContainer extends Component {
           <Menu.Item as='a' active>
             Home
           </Menu.Item>
-          <Menu.Item as='a'>Listings</Menu.Item>
           <Menu.Item as='a'>Services</Menu.Item>
           <Menu.Item as='a'>Contact Us</Menu.Item>
           <Menu.Item as='a'>Log in</Menu.Item>

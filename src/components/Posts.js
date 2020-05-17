@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Post from './Post';
 import Homepagelayout from './LandingPage';
 import { PostsContext } from '../providers/PostsProvider';
-import { Grid, Segment, Header } from 'semantic-ui-react';
+import { Grid, Segment, Header, Container } from 'semantic-ui-react';
 
 const Posts = () => {
 
@@ -12,16 +12,22 @@ const Posts = () => {
   return (
     <div >
       <Homepagelayout />
-      <Segment>
-        <Header basic="true" color='black' size='huge' style={{textAlign: 'center'}}>Listings</Header>
+      <Segment color='teal'>
+        <Header basic="true" color='teal' size='huge' style={{textAlign: 'center'}}>Available Listings</Header>
       </Segment>
-      <Grid container columns={3}>
-        {posts.map(post => 
-          <Grid.Column  mobile={16} tablet={8} computer={4} key={post.id}>
-            <Post {...post} key={post.id} />
-          </Grid.Column>          
-        )} 
-      </Grid>
+      <Container style={{marginTop: '20px'}}>
+        <Grid container columns={3}>
+          {posts.map(post => 
+            <Grid.Column  mobile={16} tablet={8} computer={4} key={post.id}>
+              <Post {...post} key={post.id} />
+            </Grid.Column>          
+          )} 
+        </Grid>
+      </Container>
+      <Segment>
+        <Header size='huge'></Header>
+      </Segment>
+
     </div>
   )
 }
