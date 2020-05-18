@@ -8,18 +8,17 @@ class AddPostTwo extends Component {
   state = initialState;
   
   handleUploadChange = e => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      const imageName = image.name;
-      this.setState(() => ({ image, imageName }));
-    }
+    const file = Array.from(e.target.files);
+    this.setState({ file });   
   };
 
   handleUpload = e => {
     e.preventDefault(); 
-    const { image } = this.state;
-    const uploadTask = storage.ref(`images/file/${image.name}`).put(image);
-    uploadTask.on(
+    const random = Math.random();
+    const storageRef = storage.ref();
+    this.state.file.forEach((file) => {
+      storageRef.child(`images/${random}/${file.name}`).put(file).then(
+
       "state_changed",
       snapshot => {
         // progress function ...
@@ -35,14 +34,17 @@ class AddPostTwo extends Component {
       () => {
         // complete function ...
         storage
-          .ref("images/file")
-          .child(image.name)
+          .ref(`images/${random}`)
+          .child(file.name)
           .getDownloadURL()
           .then(url => {
             this.setState({ url });
+            console.log('url: ', this.state.url)
           });
+          console.log('url: ', this.state.url)
       }
     );
+    });
   }
 
   handleChange = event => {
@@ -117,8 +119,10 @@ class AddPostTwo extends Component {
           <Message warning>
             <Advertisement unit='banner' centered test='Salam ô Alikom!' /><br />
             <Message.Header>For consistency </Message.Header>
-              <p>{'\u2022'} Upload all images in landscape view.</p>
-              <p>{'\u2022'} Enter all fields for data your records.</p>
+              <p>
+                {'\u2022'} Upload all images in landscape view.<br />
+                {'\u2022'} Enter all fields for data your records.
+              </p>
           </Message>        
           <Divider/>
           <div>
