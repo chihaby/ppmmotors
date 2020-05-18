@@ -18,7 +18,7 @@ class AddPostTwo extends Component {
   handleUpload = e => {
     e.preventDefault(); 
     const { image } = this.state;
-    const uploadTask = storage.ref(`images/file/${image.name}`).put(image);
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -35,7 +35,7 @@ class AddPostTwo extends Component {
       () => {
         // complete function ...
         storage
-          .ref("images/file")
+          .ref("images")
           .child(image.name)
           .getDownloadURL()
           .then(url => {

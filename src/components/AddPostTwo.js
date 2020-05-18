@@ -2,23 +2,32 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { year: '', make: '', model: '', description:'', price: '', url: '', progress: 0, imageName: '', titleError: '', descriptionError: '',  urlError: '' };
+const initialState = { year: '', make: '', model: '', description:'', price: '', url: '', url1: '', progress: 0, imageName: '', titleError: '', descriptionError: '',  urlError: '' };
 
 class AddPostTwo extends Component {
   state = initialState;
   
-  handleUploadChange = e => {
-    const file = Array.from(e.target.files);
-    this.setState({ file });   
+  handleUploadChange = e => {    
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      const imageName = image.name;
+      this.setState(() => ({ image, imageName }));
+    }
+
+    if (e.target.files[1]) {
+      const image1 = e.target.files[1];
+      const imageName1 = image1.name;
+      this.setState(() => ({ image1, imageName1 }));
+    }
   };
 
   handleUpload = e => {
     e.preventDefault(); 
     const random = Math.random();
-    const storageRef = storage.ref();
-    this.state.file.forEach((file) => {
-      storageRef.child(`images/${random}/${file.name}`).put(file).then(
-
+    const { image, image1 } = this.state;
+    const uploadTask = storage.ref(`images/${random}/${image.name}`).put(image);
+    const uploadTask1 = storage.ref(`images/${random}/${image1.name}`).put(image1);
+    uploadTask.on(
       "state_changed",
       snapshot => {
         // progress function ...
@@ -35,16 +44,38 @@ class AddPostTwo extends Component {
         // complete function ...
         storage
           .ref(`images/${random}`)
-          .child(file.name)
+          .child(image.name)
           .getDownloadURL()
           .then(url => {
             this.setState({ url });
-            console.log('url: ', this.state.url)
           });
-          console.log('url: ', this.state.url)
       }
     );
-    });
+
+    uploadTask1.on(
+      "state_changed",
+      snapshot => {
+        // progress function ...
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        this.setState({ progress });
+      },
+      error => {
+        // Error function ...
+        console.log(error);
+      },
+      () => {
+        // complete function ...
+        storage
+          .ref(`images/${random}`)
+          .child(image1.name)
+          .getDownloadURL()
+          .then(url1 => {
+            this.setState({ url1 });
+          });
+      }
+    );
   }
 
   handleChange = event => {
@@ -73,7 +104,7 @@ class AddPostTwo extends Component {
       descriptionError = ' Price can not be blank'
     }
     if (!this.state.url) {
-      urlError = 'Image not saved Click Upload button '
+      urlError = 'Image not saved '
     }
 
     if (yearError || makeError ||modelError ||descriptionError || urlError || priceError) {
@@ -112,7 +143,7 @@ class AddPostTwo extends Component {
   };
 
   render() {
-    const { year, make, model, cylinders, odometer, vin, transmition, description, price, color, note, url, progress, yearError, makeError, modelError, urlError, priceError } = this.state;
+    const { year, make, model, cylinders, odometer, vin, transmition, description, price, color, note, url, url1, progress, yearError, makeError, modelError, urlError, priceError } = this.state;
     return (
       <div>
         <div> 
@@ -140,8 +171,13 @@ class AddPostTwo extends Component {
           </Button> (required)
           <br />
             <Image 
-              size='large'
+              size='small'
               src={url}
+              alt=""
+            />
+            <Image style={{float: 'left'}}
+              size='small'
+              src={url1}
               alt=""
             />
           <div style={{fontSize: 20, color: 'red'}}>{urlError}</div>
@@ -315,3 +351,8 @@ class AddPostTwo extends Component {
   }
 
 export default AddPostTwo;
+
+
+// const storageRef = storage.ref();
+// this.state.file.forEach((file) => {
+//   storageRef.child(`images/file/${file.name}`).put(file).then(
