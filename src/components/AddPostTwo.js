@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { image: '', year: '', make: '', model: '', description:'', price: '', url: '', url1: '', progress: 0, titleError: '', descriptionError: '',  urlError: '' };
-
+const initialState = { data: [], image: '', year: '', make: '', model: '', description:'', price: '', url: '', url1: '', progress: 0, titleError: '', descriptionError: '',  urlError: '' };
 class AddPostTwo extends Component {
   state = initialState;
   
@@ -12,12 +11,13 @@ class AddPostTwo extends Component {
     this.setState({ file }); 
   }
   handleUpload = e => {
+
     e.preventDefault(); 
     const random = Math.random();
-    const { file } = this.state;
+    const { file, data } = this.state;
     const storageRef = storage.ref();
     file.forEach( file => storageRef.child(`images/${random}/${file.name}`).put(file)
-    .then(
+    .on(
       "state_changed",
       snapshot => {
         // progress function ...
@@ -31,16 +31,18 @@ class AddPostTwo extends Component {
         console.log(error);
       },
       () => {
+  
         // complete function ...
-        storage
-          .ref(`images/${random}`)
-          .child(file.name)
+        storageRef.child(`images/${random}/${file.name}`)
           .getDownloadURL()
           .then(url => {
-            this.setState({ url });
-          });
+            data.push(url)
+            this.setState({ url, data });
+          })
       })
-    );
+    )
+    console.log('file: ', this.state.file);
+    console.log('data: ', data)
   }
 
   handleChange = event => {
@@ -108,7 +110,7 @@ class AddPostTwo extends Component {
   };
 
   render() {
-    const { year, make, model, cylinders, odometer, vin, transmition, description, price, color, note, url, url1, progress, yearError, makeError, modelError, urlError, priceError } = this.state;
+    const { data, year, make, model, cylinders, odometer, vin, transmition, description, price, color, note, url, progress, yearError, makeError, modelError, urlError, priceError } = this.state;
     return (
       <div>
         <div> 
@@ -132,14 +134,21 @@ class AddPostTwo extends Component {
           <Image.Group size='small'>
             <Image 
               size='small'
-              src={url}
+              src={data[0]}
               alt=""
             />
-            <Image
+
+            <Image 
               size='small'
-              src={url1}
+              src={data[1]}
               alt=""
             />
+            <Image 
+              size='small'
+              src={data[2]}
+              alt=""
+            />            
+            
         </Image.Group>
 
         <br />
