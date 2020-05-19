@@ -12,19 +12,15 @@ class AddPostTwo extends Component {
       const image = e.target.files[0];
       this.setState(() => ({ image }));
     }
-
-    if (e.target.files[1]) {
-      const image1 = e.target.files[1];
-      this.setState(() => ({ image1 }));
-    }
   };
 
   handleUpload = e => {
     e.preventDefault(); 
     const random = Math.random();
-    const { image, image1 } = this.state;
-    const uploadTask = storage.ref(`images/${random}/${image.name}`).put(image);
-    const uploadTask1 = storage.ref(`images/${random}/${image1.name}`).put(image1);
+    const { file } = this.state;
+
+    const uploadTask = storage.ref.child(`images/${random}/${file.name}`).put(file);
+
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -42,35 +38,10 @@ class AddPostTwo extends Component {
         // complete function ...
         storage
           .ref(`images/${random}`)
-          .child(image.name)
+          .child(file.name)
           .getDownloadURL()
           .then(url => {
             this.setState({ url });
-          });
-      }
-    );
-
-    uploadTask1.on(
-      "state_changed",
-      snapshot => {
-        // progress function ...
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        this.setState({ progress });
-      },
-      error => {
-        // Error function ...
-        console.log(error);
-      },
-      () => {
-        // complete function ...
-        storage
-          .ref(`images/${random}`)
-          .child(image1.name)
-          .getDownloadURL()
-          .then(url1 => {
-            this.setState({ url1 });
           });
       }
     );
@@ -85,7 +56,6 @@ class AddPostTwo extends Component {
     let yearError = "";
     let makeError = "";
     let modelError = "";
-    let descriptionError = "";
     let urlError = "";
     let priceError = "";
 
@@ -150,7 +120,8 @@ class AddPostTwo extends Component {
             <Advertisement unit='banner' centered test='Salam ô Alikom!' /><br />
             <Message.Header>For consistency </Message.Header>
               <p>
-                {'\u2022'} Upload all images in landscape view.<br />
+                {'\u2022'} Upload a maximum of 8 images<br />
+                {'\u2022'} all images must be in landscape view.<br />
                 {'\u2022'} Enter all fields for data your records.
               </p>
           </Message>        
@@ -200,7 +171,6 @@ class AddPostTwo extends Component {
                 onChange={this.handleChange}>
                 <Label basic>$</Label>
                 <input 
-
                 />
                 <Label>.00</Label>
               </Input>
@@ -353,3 +323,4 @@ export default AddPostTwo;
 // const storageRef = storage.ref();
 // this.state.file.forEach((file) => {
 //   storageRef.child(`images/file/${file.name}`).put(file).then(
+
