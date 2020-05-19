@@ -10,8 +10,7 @@ class AddPostTwo extends Component {
   handleUploadChange = e => {    
     const file = Array.from(e.target.files);
     this.setState({ file }); 
-  };
-
+  }
   handleUpload = e => {
     e.preventDefault(); 
     const random = Math.random();
@@ -40,9 +39,9 @@ class AddPostTwo extends Component {
           .then(url => {
             this.setState({ url });
           });
-      }
-    )
-  )}
+      })
+    );
+  }
 
   handleChange = event => {
     const { name, value } = event.target;
