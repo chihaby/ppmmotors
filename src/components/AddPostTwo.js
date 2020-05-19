@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { year: '', make: '', model: '', description:'', price: '', url: '', url1: '', progress: 0, imageName: '', titleError: '', descriptionError: '',  urlError: '' };
+const initialState = { image: '', year: '', make: '', model: '', description:'', price: '', url: '', url1: '', progress: 0, titleError: '', descriptionError: '',  urlError: '' };
 
 class AddPostTwo extends Component {
   state = initialState;
@@ -10,14 +10,12 @@ class AddPostTwo extends Component {
   handleUploadChange = e => {    
     if (e.target.files[0]) {
       const image = e.target.files[0];
-      const imageName = image.name;
-      this.setState(() => ({ image, imageName }));
+      this.setState(() => ({ image }));
     }
 
     if (e.target.files[1]) {
       const image1 = e.target.files[1];
-      const imageName1 = image1.name;
-      this.setState(() => ({ image1, imageName1 }));
+      this.setState(() => ({ image1 }));
     }
   };
 
@@ -101,14 +99,14 @@ class AddPostTwo extends Component {
       modelError = 'Model can not be blank'
     }
     if (!this.state.price) {
-      descriptionError = ' Price can not be blank'
+      priceError = ' Price can not be blank'
     }
     if (!this.state.url) {
       urlError = 'Image not saved '
     }
 
-    if (yearError || makeError ||modelError ||descriptionError || urlError || priceError) {
-      this.setState({ yearError, makeError, modelError, descriptionError, urlError });
+    if (yearError || makeError ||modelError ||priceError || urlError || priceError) {
+      this.setState({ yearError, makeError, modelError, priceError, urlError });
       return false;
     }
     return true;
@@ -118,15 +116,16 @@ class AddPostTwo extends Component {
     event.preventDefault(); 
     const isValid = this.validate();
     if (isValid) {
-      const { year, make, model, description, url, imageName, progress } = this.state;
+      const { year, make, model, image, description, url, price, progress } = this.state;
       const { uid, displayName, email, photoURL } = auth.currentUser || {};
       const post = {
         year,
         make,
         model,
+        image,
         description,
         url,
-        imageName,
+        price,
         progress,
           user: {
           uid,
@@ -160,36 +159,59 @@ class AddPostTwo extends Component {
             <Progress percent={progress} indicating />
           </div>
           <Header as='h4'>Select images</Header>
-          <div >
-            <input type="file" required multiple onChange={this.handleUploadChange} />
-          </div> 
+          <input type="file" required multiple onChange={this.handleUploadChange} />
           <br />
-          <Button color='blue' size='large'
-            onClick={this.handleUpload}
-          >
-            Save 
-          </Button> (required)
-          <br />
+
+          <Image.Group size='small'>
             <Image 
               size='small'
               src={url}
               alt=""
             />
-            <Image style={{float: 'left'}}
+            <Image
               size='small'
               src={url1}
               alt=""
             />
+        </Image.Group>
+
+        <br />
+        <Button color='blue' size='medium'
+          onClick={this.handleUpload}
+        >
+          Upload images 
+        </Button> 
+          <br />
+
           <div style={{fontSize: 20, color: 'red'}}>{urlError}</div>
           <Divider/>
         </div>
         <div>
           <Form onSubmit={this.handleSubmit}>
-            <Label as='a' basic color='blue'>Make</Label> (required)
+            <div>
+              <Label as='a' basic color='blue'>Price</Label>
+              <br />
+              <Input 
+                labelPosition='right' 
+                type='number' 
+                placeholder='Amount'
+                name="price"
+                value={price}
+                onChange={this.handleChange}>
+                <Label basic>$</Label>
+                <input 
+
+                />
+                <Label>.00</Label>
+              </Input>
+            </div>
+            <div style={{fontSize: 20, color: 'red'}}>{priceError}</div>
+            <br />
+
+            <Label as='a' basic color='blue'>Make</Label> 
             <br />
             <Form.Field>
               <input 
-                className='form'
                 type="text"
                 name="make"
                 placeholder="Make"
@@ -199,11 +221,10 @@ class AddPostTwo extends Component {
             </Form.Field>
             <div style={{fontSize: 20, color: 'red'}}>{makeError}</div>
 
-            <Label as='a' basic color='blue'>Model</Label>(required)
+            <Label as='a' basic color='blue'>Model</Label>
             <br />
             <Form.Field>
-              <input
-                className='form'
+              <Input
                 type="text"
                 name="model"
                 placeholder="Model"
@@ -213,13 +234,11 @@ class AddPostTwo extends Component {
             </Form.Field>
             <div style={{fontSize: 20, color: 'red'}}>{modelError}</div>
 
-            <Label as='a' basic color='blue'>Year</Label>(required)
+            <Label as='a' basic color='blue'>Year</Label>
             <br />
             <Form.Field>
-              <Input 
-                className='form'
-                type="text"
-                pattern='[0-9]*'
+              <input 
+                type="number"
                 name="year"
                 placeholder="Year"
                 value={year}
@@ -232,7 +251,6 @@ class AddPostTwo extends Component {
             <br />
             <Form.Field>
               <input
-                className='form'
                 type="text"
                 name="color"
                 placeholder="color"
@@ -241,28 +259,11 @@ class AddPostTwo extends Component {
               />
             </Form.Field>
 
-            <Label as='a' basic color='blue'>Price</Label>(required)
-            <br />
-            <Form.Field>
-              <input 
-                className='form'
-                type="text"
-                pattern='[0-9]*'
-                name="price"
-                placeholder="price"
-                value={price}
-                onChange={this.handleChange}
-              />
-            </Form.Field>
-            <div style={{fontSize: 20, color: 'red'}}>{priceError}</div>
-
             <Label as='a' basic color='blue'>Vin Number</Label>
             <br />
             <Form.Field>
               <input 
-                className='form'
                 type="text"
-                pattern='[0-9]*'
                 name="vin"
                 placeholder="vin"
                 value={vin}
@@ -274,9 +275,7 @@ class AddPostTwo extends Component {
             <br />
             <Form.Field>
               <input 
-                className='form'
-                type="text"
-                pattern='[0-9]*'
+                type="number"
                 name="Cylinders"
                 placeholder="Cylinders"
                 value={cylinders}
@@ -288,7 +287,6 @@ class AddPostTwo extends Component {
             <br />
             <Form.Field>
               <input 
-                className='form'
                 type="text"
                 pattern='[0-9]*'
                 name="odometer"
@@ -302,7 +300,6 @@ class AddPostTwo extends Component {
             <br />
             <Form.Field>
               <input 
-                className='form'
                 type="text"
                 name="transmition"
                 placeholder="transmition"
@@ -311,7 +308,7 @@ class AddPostTwo extends Component {
               />
             </Form.Field>
 
-            <Label as='a' basic color='blue'>Description</Label> (Optional)
+            <Label as='a' basic color='blue'>Description</Label> Optional
             <br />
             <Form.Field>
               <TextArea 
@@ -326,7 +323,7 @@ class AddPostTwo extends Component {
               </TextArea>
             </Form.Field>
 
-            <Label as='a' basic color='blue'>Additional Notes</Label> (Optional)
+            <Label as='a' basic color='orange'>Private Notes</Label> Optional
             <br />
             <Form.Field>
               <TextArea 
