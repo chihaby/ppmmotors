@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {Container, Image, Button, Card, Label } from 'semantic-ui-react';
 
-const Post = ({ id, make, year, model, url, price }) => {
+const Post = ({ id, make, year, model, price, urls, url }) => {
+  console.log(urls)
+
   return (
       <Container>
-        <Label as='a' color='teal' style={{float: 'right'}} tag >$ {price}6000</Label><br />
+        <Label as='a' color='teal' style={{float: 'right'}} tag >$ {price}</Label><br />
         <Card>
           <Image src={url} wrapped ui={false} />
           <Card.Content>

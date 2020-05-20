@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { data: [], image: '', year: '', make: '', model: '', description:'', price: '', url: '', url1: '', progress: 0, titleError: '', descriptionError: '',  urlError: '' };
+const initialState = { urls: [], url: '', image: '', year: '', make: '', model: '', description:'', price: '', progress: 0, titleError: '', urlError: '' };
 class AddPostTwo extends Component {
   state = initialState;
   
@@ -14,7 +14,7 @@ class AddPostTwo extends Component {
 
     e.preventDefault(); 
     const random = Math.random();
-    const { file, data } = this.state;
+    const { file, url, urls } = this.state;
     const storageRef = storage.ref();
     file.forEach( file => storageRef.child(`images/${random}/${file.name}`).put(file)
     .on(
@@ -36,13 +36,14 @@ class AddPostTwo extends Component {
         storageRef.child(`images/${random}/${file.name}`)
           .getDownloadURL()
           .then(url => {
-            data.push(url)
-            this.setState({ url, data });
+            urls.push(url)
+            this.setState({ url, urls });
           })
       })
     )
     console.log('file: ', this.state.file);
-    console.log('data: ', data)
+    console.log('urls: ', urls)
+    console.log('url: ', url)
   }
 
   handleChange = event => {
@@ -84,15 +85,15 @@ class AddPostTwo extends Component {
     event.preventDefault(); 
     const isValid = this.validate();
     if (isValid) {
-      const { year, make, model, image, description, url, price, progress } = this.state;
+      const { year, make, model, image, url, urls, price, progress } = this.state;
       const { uid, displayName, email, photoURL } = auth.currentUser || {};
       const post = {
         year,
         make,
         model,
         image,
-        description,
         url,
+        urls,
         price,
         progress,
           user: {
@@ -110,7 +111,7 @@ class AddPostTwo extends Component {
   };
 
   render() {
-    const { data, year, make, model, cylinders, odometer, vin, transmition, description, price, color, note, url, progress, yearError, makeError, modelError, urlError, priceError } = this.state;
+    const { urls, year, make, model, cylinders, odometer, vin, transmition, description, price, color, note, progress, yearError, makeError, modelError, urlError, priceError } = this.state;
     return (
       <div>
         <div> 
@@ -134,18 +135,18 @@ class AddPostTwo extends Component {
           <Image.Group size='small'>
             <Image 
               size='small'
-              src={data[0]}
+              src={urls[0]}
               alt=""
             />
 
             <Image 
               size='small'
-              src={data[1]}
+              src={urls[1]}
               alt=""
             />
             <Image 
               size='small'
-              src={data[2]}
+              src={urls[2]}
               alt=""
             />            
             
@@ -324,8 +325,4 @@ class AddPostTwo extends Component {
 
 export default AddPostTwo;
 
-
-// const storageRef = storage.ref();
-// this.state.file.forEach((file) => {
-//   storageRef.child(`images/file/${file.name}`).put(file).then(
 

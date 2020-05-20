@@ -10,7 +10,7 @@ const belongsToCurrentUser = (currentUser) => {
   return currentUser.uid;
 }
 
-const PostContent = ({ id, year, make, model, content, url, user, imageName }) => {
+const PostContent = ({ id, year, make, model, content, urls, url, user, imageName }) => {
 
   const currentUser = useContext(UserContext);
   const postRef = firestore.doc(`posts/${id}`);
@@ -37,7 +37,11 @@ const remove = () => {
         <div>
           <Header as='h1' >{year}{' '}{make}{' '}{model}</Header>
           <div>
-            <Image src={url} size='medium' />            
+            <Image.Group>
+              <Image src={url} alt="" size='medium' /> 
+              <Image src={urls[0]} alt="" size='medium'/>   
+              <Image src={urls[1]} alt="" size='medium'/>         
+            </Image.Group>
           </div>
           <br />
           {content}

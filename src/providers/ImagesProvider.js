@@ -8,6 +8,8 @@ class ImagesProvider extends Component {
   state = { 
     image: null,
     url: "",
+    data: [],
+    urls: [],
     progress: 0
   }
 
