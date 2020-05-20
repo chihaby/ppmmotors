@@ -121,7 +121,8 @@ class AddPostTwo extends Component {
               <p>
                 {'\u2022'} Upload a maximum of 8 images<br />
                 {'\u2022'} all images must be in landscape view.<br />
-                {'\u2022'} Enter all fields for data your records.
+                {'\u2022'} Enter all fields necessary for your records.<br />
+                {'\u2022'} Refresh page after every listing.
               </p>
           </Message>        
           <Divider/>
@@ -157,7 +158,7 @@ class AddPostTwo extends Component {
           onClick={this.handleUpload}
         >
           Upload images 
-        </Button> 
+        </Button> IF IMAGES ARE NOT SHOWING. CLICK UPLOAD
           <br />
 
           <div style={{fontSize: 20, color: 'red'}}>{urlError}</div>
