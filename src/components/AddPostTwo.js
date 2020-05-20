@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { urls: [], url: '', image: '', year: '', make: '', model: '', description:'', price: '', progress: 0, titleError: '', urlError: '' };
+const initialState = { urls: [], url: '', image: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '' };
 class AddPostTwo extends Component {
   state = initialState;
   
@@ -57,6 +57,10 @@ class AddPostTwo extends Component {
     let modelError = "";
     let urlError = "";
     let priceError = "";
+    let vinError = "";
+    let odometerError = "";
+    let transmitionError = "";
+    let cylindersError = "";
 
     if (!this.state.year) {
       yearError = 'Year can not be blank'
@@ -73,9 +77,21 @@ class AddPostTwo extends Component {
     if (!this.state.url) {
       urlError = 'Image not saved '
     }
+    if (!this.state.vin) {
+      vinError = 'Vin number can not be empty '
+    }
+    if (!this.state.odometer) {
+      odometerError = 'Odometer can not be empty '
+    }
+    if (!this.state.transmition) {
+      transmitionError = 'Transmition type can not be empty '
+    }
+    if (!this.state.cylinders) {
+      cylindersError = 'Cylinders can not be empty '
+    }
 
-    if (yearError || makeError ||modelError ||priceError || urlError || priceError) {
-      this.setState({ yearError, makeError, modelError, priceError, urlError });
+    if (yearError || makeError ||modelError ||priceError || urlError || priceError || vinError || odometerError || transmitionError || cylindersError ){
+      this.setState({ yearError, makeError, modelError, priceError, urlError, vinError, odometerError, transmitionError, cylindersError });
       return false;
     }
     return true;
@@ -85,7 +101,7 @@ class AddPostTwo extends Component {
     event.preventDefault(); 
     const isValid = this.validate();
     if (isValid) {
-      const { year, make, model, image, url, urls, price, progress } = this.state;
+      const { year, make, model, vin, image, url, urls, price, progress, odometer, transmition, cylinders, description } = this.state;
       const { uid, displayName, email, photoURL } = auth.currentUser || {};
       const post = {
         year,
@@ -95,6 +111,11 @@ class AddPostTwo extends Component {
         url,
         urls,
         price,
+        odometer,
+        vin,
+        transmition,
+        cylinders,
+        description,
         progress,
           user: {
           uid,
@@ -111,7 +132,7 @@ class AddPostTwo extends Component {
   };
 
   render() {
-    const { urls, year, make, model, cylinders, odometer, vin, transmition, description, price, color, note, progress, yearError, makeError, modelError, urlError, priceError } = this.state;
+    const { urls, year, make, model, cylinders, odometer, vin, transmition, description, price, note, progress, yearError, makeError, modelError, urlError, odometerError, transmitionError, cylindersError, priceError, vinError } = this.state;
     return (
       <div>
         <div> 
@@ -160,11 +181,10 @@ class AddPostTwo extends Component {
           Upload images 
         </Button> IF IMAGES ARE NOT SHOWING. CLICK UPLOAD
           <br />
-
           <div style={{fontSize: 20, color: 'red'}}>{urlError}</div>
           <Divider/>
         </div>
-        <div>
+          <div>
           <Form onSubmit={this.handleSubmit}>
             <div>
               <Label as='a' basic color='blue'>Price</Label>
@@ -224,42 +244,6 @@ class AddPostTwo extends Component {
             </Form.Field>
             <div style={{fontSize: 20, color: 'red'}}>{yearError}</div>
 
-            <Label as='a' basic color='blue'>Color</Label>
-            <br />
-            <Form.Field>
-              <input
-                type="text"
-                name="color"
-                placeholder="color"
-                value={color}
-                onChange={this.handleChange}
-              />
-            </Form.Field>
-
-            <Label as='a' basic color='blue'>Vin Number</Label>
-            <br />
-            <Form.Field>
-              <input 
-                type="text"
-                name="vin"
-                placeholder="vin"
-                value={vin}
-                onChange={this.handleChange}
-              />
-            </Form.Field>
-
-            <Label as='a' basic color='blue'>Cylinders</Label>
-            <br />
-            <Form.Field>
-              <input 
-                type="number"
-                name="Cylinders"
-                placeholder="Cylinders"
-                value={cylinders}
-                onChange={this.handleChange}
-              />
-            </Form.Field>
-
             <Label as='a' basic color='blue'>Odometer</Label>
             <br />
             <Form.Field>
@@ -272,6 +256,7 @@ class AddPostTwo extends Component {
                 onChange={this.handleChange}
               />
             </Form.Field>
+            <div style={{fontSize: 20, color: 'red'}}>{odometerError}</div>
 
             <Label as='a' basic color='blue'>Transmition</Label>
             <br />
@@ -284,6 +269,33 @@ class AddPostTwo extends Component {
                 onChange={this.handleChange}
               />
             </Form.Field>
+            <div style={{fontSize: 20, color: 'red'}}>{transmitionError}</div>
+
+            <Label as='a' basic color='blue'>Cylinders</Label>
+            <br />
+            <Form.Field>
+              <input 
+                type="text"
+                name="cylinders"
+                placeholder="cylinders"
+                value={cylinders}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+            <div style={{fontSize: 20, color: 'red'}}>{cylindersError}</div>
+
+            <Label as='a' basic color='blue'>Vin Number</Label>
+            <br />
+            <Form.Field>
+              <input 
+                type="text"
+                name="vin"
+                placeholder="vin"
+                value={vin}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+            <div style={{fontSize: 20, color: 'red'}}>{vinError}</div>
 
             <Label as='a' basic color='blue'>Description</Label> Optional
             <br />
