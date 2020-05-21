@@ -93,13 +93,13 @@ class DesktopContainer extends Component {
               size='large'
             >
               <Container>
-                <Menu.Item as='a'>
+                <Menu.Item >
                 <Link to={`/`}>Home</Link>
                 </Menu.Item>
-                <Menu.Item as='a'>
+                <Menu.Item >
                   <Link to={`/services`}>Services</Link>
                 </Menu.Item>
-                <Menu.Item as='a'> 
+                <Menu.Item > 
                   <Link to={`/contact`}>Contact Us</Link>
                 </Menu.Item>
                 <Menu.Item position='right'>
@@ -148,17 +148,17 @@ class MobileContainer extends Component {
           vertical
           visible={sidebarOpened}
         >
-          <Menu.Item as='a'>
+          <Menu.Item >
           <Link to={`/`}>Home</Link>
           </Menu.Item>
-          <Menu.Item as='a'>
+          <Menu.Item >
             <Link to={`/services`}>Services</Link>
           </Menu.Item>
-          <Menu.Item as='a'> 
+          <Menu.Item > 
             <Link to={`/contact`}>Contact Us</Link>
           </Menu.Item>
           <Menu.Item position='right'>
-            <Button as='a' inverted={!fixed} onClick={signInWithGoogle}>
+            <Button  inverted={!fixed} onClick={signInWithGoogle}>
               Log in
             </Button>
           </Menu.Item>
@@ -177,7 +177,7 @@ class MobileContainer extends Component {
                   <Icon name='sidebar' />
                 </Menu.Item>
                 <Menu.Item position='right'>
-                  <Button as='a' inverted onClick={signInWithGoogle}>
+                  <Button  inverted onClick={signInWithGoogle}>
                     Log in
                   </Button>
                 </Menu.Item>

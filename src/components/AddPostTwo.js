@@ -2,22 +2,25 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
+const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '',  random: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
 class AddPostTwo extends Component {
   state = initialState;
 
   handleMainUploadChange = e => {
     if (e.target.files[0]) {
       const image = e.target.files[0];
-      this.setState(() => ({ image }));
+      const imageName = image.name;
+      this.setState(() => ({ image, imageName }));
     }
   };
 
 
+
   handleMainUpload = e => {
     e.preventDefault(); 
-    const { image } = this.state;
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    const { image, imageName } = this.state;
+    console.log('imageName ', imageName)
+    const uploadTask = storage.ref(`images/${imageName}`).put(image);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -46,7 +49,8 @@ class AddPostTwo extends Component {
   
   handleUploadChange = e => {    
     const file = Array.from(e.target.files);
-    this.setState({ file }); 
+    const fileName = file.name;
+    this.setState({ file, fileName }); 
   }
   handleUpload = e => {
 
@@ -75,8 +79,10 @@ class AddPostTwo extends Component {
           .getDownloadURL()
           .then(url => {
             urls.push(url);
-            this.setState({ url, urls });
+            this.setState({ url, urls, random });
           })
+          console.log('random', random)
+          console.log('file-name',file.name)
       })
     )
   }
@@ -136,16 +142,18 @@ class AddPostTwo extends Component {
     return true;
   };
 
-  handleSubmit = event => {
-
+  handleSubmit = e => {
+    e.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      const { year, make, model, vin, url, urls, mainUrl, price, progress, odometer, transmition, cylinders, description } = this.state;
+      const { year, make, model, vin, url, urls, mainUrl, imageName, random, price, progress, odometer, transmition, cylinders, description } = this.state;
       const { uid, displayName, email } = auth.currentUser || {};
       const post = {
         year,
         make,
         model,
+        imageName,
+        random,
         url,
         urls,
         mainUrl,
@@ -167,7 +175,6 @@ class AddPostTwo extends Component {
       firestore.collection('backup').add(post);
       this.setState({ initialState });
     };
-    this.setState({ initialState });
   };
 
   render() {
@@ -338,7 +345,7 @@ class AddPostTwo extends Component {
             <br />
             <Form.Field>
               <input 
-                type="text"
+
                 name="transmition"
                 placeholder="transmition"
                 value={transmition}

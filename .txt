@@ -9,3 +9,17 @@ On the Formats screen, select Most Compatible instead of High Efficiency
 Be consistent in taking photos. Always landscape mode
 
 What keywords will your audience use to find your website?
+
+
+fileRef.listAll()
+.then(dir => {
+  dir.items.forEach(fileRef => {
+    this.deleteFile(ref.fullPath, fileRef.name);
+  });
+  dir.prefixes.forEach(folderRef => {
+    this.deleteFolderContents(folderRef.fullPath);
+  })
+})
+.catch(error => {
+  console.log(error);
+});

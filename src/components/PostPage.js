@@ -101,13 +101,13 @@ class PostPage extends Component {
               size='large'
             >
               <Container>
-              <Menu.Item as='a'>
+              <Menu.Item >
                 <Link to={`/`}>Home</Link>
                 </Menu.Item>
-                <Menu.Item as='a'>
+                <Menu.Item >
                   <Link to={`/services`}>Services</Link>
                 </Menu.Item>
-                <Menu.Item as='a'> 
+                <Menu.Item > 
                   <Link to={`/contact`}>Contact Us</Link>
                 </Menu.Item>
               </Container>

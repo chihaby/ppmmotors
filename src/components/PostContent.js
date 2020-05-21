@@ -3,26 +3,33 @@ import { firestore, storage } from '../firebase';
 import { UserContext } from '../providers/UserProvider';
 import { Link } from 'react-router-dom';
 import { Header, Image, Segment, Icon, Grid, Menu, Divider } from 'semantic-ui-react';
-// import InnerNavbar from './InnerNavbar';
 
 const belongsToCurrentUser = (currentUser) => {
   if(!currentUser) return false;
   return currentUser.uid;
 }
 
-const PostContent = ({ id, year, make, model, urls, url, mainUrl, user, imageName, odometer, transmition, cylinders, vin, price, description }) => {
+const PostContent = ({ id, year, make, model, urls, mainUrl, user, imageName, random, file, fileName, odometer, transmition, cylinders, vin, price, description }) => {
 
   const currentUser = useContext(UserContext);
   const postRef = firestore.doc(`posts/${id}`);
   const storageRef = storage.ref();
-  const imagesRef = storageRef.child(`images/${imageName}`);
+  const imageRef = storageRef.child(`images/${imageName}`);
+  const fileRef = storageRef.child(`images/${random}`);
+  
+  console.log('imageName: ', imageName)
+  console.log('random ', random)
+  console.log('fileName ', file)
 
 const remove = () => {
   postRef.delete();
-  imagesRef.delete().catch((error) => {
+  imageRef.delete().catch((error) => {
     console.error(error)
   });
-  alert("Record is deleted");
+  fileRef.forEach(fileName => fileName.delete().catch((error) => {
+    console.error(error)
+  })
+  );
 }
 
   return (
@@ -45,7 +52,7 @@ const remove = () => {
             <Image src={urls[4]} alt="" size='medium'/>
             <Image src={urls[5]} alt="" size='medium'/>      
             <Image src={urls[6]} alt="" size='medium'/>   
-            <Image src={urls[7]} alt="" size='medium'/>   
+            <Image src={urls[7]} alt="" size='medium'/>
           </Image.Group>
         </div>
         <br />
@@ -70,13 +77,14 @@ const remove = () => {
           </Grid.Row>
         </Grid>   
         <br />
- 
+
         <Divider />
           <div style={{textAlign: 'center'}}>
+            <Segment color='grey'>Private notes :</Segment>
             <div>
               {belongsToCurrentUser(currentUser, user) && (
                 <div>
-                  <button className="ui negative button" onClick={remove}>Delete</button>
+                  <button className="ui negative button" onClick={remove}>Delete Listing</button>
                 </div>
               )}
             </div>
