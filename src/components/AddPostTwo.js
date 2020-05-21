@@ -2,9 +2,47 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { urls: [], url: '', image: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '' };
+const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
 class AddPostTwo extends Component {
   state = initialState;
+
+  handleMainUploadChange = e => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      this.setState(() => ({ image }));
+    }
+  };
+
+
+  handleMainUpload = e => {
+    e.preventDefault(); 
+    const { image } = this.state;
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        // progress function ...
+        const mainProgress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        this.setState({ mainProgress });
+      },
+      error => {
+        // Error function ...
+        console.log(error);
+      },
+      () => {
+        // complete function ...
+        storage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then(mainUrl => {
+            this.setState({ mainUrl });
+          });
+      }
+    );
+  }
   
   handleUploadChange = e => {    
     const file = Array.from(e.target.files);
@@ -14,7 +52,7 @@ class AddPostTwo extends Component {
 
     e.preventDefault(); 
     const random = Math.random();
-    const { file, url, urls } = this.state;
+    const { file, urls } = this.state;
     const storageRef = storage.ref();
     file.forEach( file => storageRef.child(`images/${random}/${file.name}`).put(file)
     .on(
@@ -36,14 +74,11 @@ class AddPostTwo extends Component {
         storageRef.child(`images/${random}/${file.name}`)
           .getDownloadURL()
           .then(url => {
-            urls.push(url)
+            urls.push(url);
             this.setState({ url, urls });
           })
       })
     )
-    console.log('file: ', this.state.file);
-    console.log('urls: ', urls)
-    console.log('url: ', url)
   }
 
   handleChange = event => {
@@ -52,6 +87,7 @@ class AddPostTwo extends Component {
   };
 
   validate = () => {
+    let mainUrlError = "";
     let yearError = "";
     let makeError = "";
     let modelError = "";
@@ -62,6 +98,9 @@ class AddPostTwo extends Component {
     let transmitionError = "";
     let cylindersError = "";
 
+    if (!this.state.mainUrl) {
+      mainUrlError = 'Main picture can not be blank'
+    }
     if (!this.state.year) {
       yearError = 'Year can not be blank'
     }
@@ -75,7 +114,7 @@ class AddPostTwo extends Component {
       priceError = ' Price can not be blank'
     }
     if (!this.state.url) {
-      urlError = 'Image not saved '
+      urlError = 'Images not saved '
     }
     if (!this.state.vin) {
       vinError = 'Vin number can not be empty '
@@ -90,26 +129,26 @@ class AddPostTwo extends Component {
       cylindersError = 'Cylinders can not be empty '
     }
 
-    if (yearError || makeError ||modelError ||priceError || urlError || priceError || vinError || odometerError || transmitionError || cylindersError ){
-      this.setState({ yearError, makeError, modelError, priceError, urlError, vinError, odometerError, transmitionError, cylindersError });
+    if ( mainUrlError || yearError || makeError ||modelError ||priceError || urlError || priceError || vinError || odometerError || transmitionError || cylindersError ){
+      this.setState({ yearError, makeError, modelError, priceError, mainUrlError, urlError, vinError, odometerError, transmitionError, cylindersError });
       return false;
     }
     return true;
   };
 
   handleSubmit = event => {
-    event.preventDefault(); 
+
     const isValid = this.validate();
     if (isValid) {
-      const { year, make, model, vin, image, url, urls, price, progress, odometer, transmition, cylinders, description } = this.state;
-      const { uid, displayName, email, photoURL } = auth.currentUser || {};
+      const { year, make, model, vin, url, urls, mainUrl, price, progress, odometer, transmition, cylinders, description } = this.state;
+      const { uid, displayName, email } = auth.currentUser || {};
       const post = {
         year,
         make,
         model,
-        image,
         url,
         urls,
+        mainUrl,
         price,
         odometer,
         vin,
@@ -120,8 +159,7 @@ class AddPostTwo extends Component {
           user: {
           uid,
           displayName,
-          email,
-          photoURL
+          email
         },
         createdAt: new Date(),
       }
@@ -129,31 +167,46 @@ class AddPostTwo extends Component {
       firestore.collection('backup').add(post);
       this.setState({ initialState });
     };
+    this.setState({ initialState });
   };
 
   render() {
-    const { urls, year, make, model, cylinders, odometer, vin, transmition, description, price, note, progress, yearError, makeError, modelError, urlError, odometerError, transmitionError, cylindersError, priceError, vinError } = this.state;
+    const { mainUrl, mainProgress, urls, year, make, model, cylinders, odometer, vin, transmition, description, price, note, progress, yearError, makeError, modelError, urlError, mainUrlError, odometerError, transmitionError, cylindersError, priceError, vinError } = this.state;
     return (
       <div>
         <div> 
           <Message warning>
             <Advertisement unit='banner' centered test='Salam ô Alikom!' /><br />
-            <Message.Header>For consistency </Message.Header>
+            <Message.Header>For consistency and better use</Message.Header>
               <p>
-                {'\u2022'} Upload a maximum of 8 images<br />
-                {'\u2022'} all images must be in landscape view.<br />
-                {'\u2022'} Enter all fields necessary for your records.<br />
-                {'\u2022'} Refresh page after every listing.
+                {'\u2022'} Upload a total of 8 photos<br />
+                {'\u2022'} all photos must be in landscape view.<br />
+                {'\u2022'} Make sure all fields are checked.<br />
+                {'\u2022'} Refresh the page after every submition.<br />
+                {'\u2022'} Don't forget to logout<br />
               </p>
-          </Message>        
+          </Message> 
           <Divider/>
-          <div>
-            <Progress percent={progress} indicating />
-          </div>
-          <Header as='h4'>Select images</Header>
-          <input type="file" required multiple onChange={this.handleUploadChange} />
+            <Progress percent={mainProgress} indicating />
+            <Header as='h3' >Main photo</Header>
+            <input type="file" required multiple onChange={this.handleMainUploadChange} />
+            <div style={{textAlign: 'center'}}>
+              <Image src={mainUrl} alt='' size='medium' bordered />
+            </div>
+            <br />
+            <Button color='blue' size='medium'
+              onClick={this.handleMainUpload}
+            >
+            Save 
+          </Button> IF MAIN PICTURE IS NOT SHOWING. CLICK SAVE.
           <br />
-
+          <div style={{fontSize: 20, color: 'red'}}>{mainUrlError}</div>
+          <Divider/>
+          <Divider/>
+            <Progress percent={progress} indicating />
+            <Header as='h3'>More photos </Header>
+            <input type="file" required multiple onChange={this.handleUploadChange} />
+            <br />
           <Image.Group size='small'>
             <Image 
               size='small'
@@ -170,16 +223,40 @@ class AddPostTwo extends Component {
               size='small'
               src={urls[2]}
               alt=""
-            />            
-            
+            /> 
+            <Image 
+              size='small'
+              src={urls[3]}
+              alt=""
+            />
+            <Image 
+              size='small'
+              src={urls[4]}
+              alt=""
+            /> 
+            <Image 
+              size='small'
+              src={urls[5]}
+              alt=""
+            />      
+            <Image 
+              size='small'
+              src={urls[6]}
+              alt=""
+            /> 
+            <Image 
+              size='small'
+              src={urls[7]}
+              alt=""
+            />                    
         </Image.Group>
 
         <br />
         <Button color='blue' size='medium'
           onClick={this.handleUpload}
         >
-          Upload images 
-        </Button> IF IMAGES ARE NOT SHOWING. CLICK UPLOAD
+          Save
+        </Button> IF IMAGES ARE NOT SHOWING. CLICK SAVE.
           <br />
           <div style={{fontSize: 20, color: 'red'}}>{urlError}</div>
           <Divider/>
@@ -249,7 +326,6 @@ class AddPostTwo extends Component {
             <Form.Field>
               <input 
                 type="text"
-                pattern='[0-9]*'
                 name="odometer"
                 placeholder="odometer"
                 value={odometer}
@@ -327,7 +403,7 @@ class AddPostTwo extends Component {
               </TextArea>
             </Form.Field>
 
-            <Button className="ui primary button" type="submit" value="Create Post" size='huge'>Create a listing</Button>
+            <Button className="ui primary button" type="submit" value="Create Post" size='huge'>Submit</Button>
           </Form>
         </div>
       </div>

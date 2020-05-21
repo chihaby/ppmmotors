@@ -11,7 +11,8 @@ import {
   Segment,
   Header,
   Visibility,
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 const getWidth = () => {
   const isSSR = typeof window === 'undefined'
@@ -100,11 +101,15 @@ class PostPage extends Component {
               size='large'
             >
               <Container>
-                <Menu.Item as='a' active>
-                  Home
+              <Menu.Item as='a'>
+                <Link to={`/`}>Home</Link>
                 </Menu.Item>
-                <Menu.Item as='a'>Services</Menu.Item>
-                <Menu.Item as='a'>Contact Us</Menu.Item>
+                <Menu.Item as='a'>
+                  <Link to={`/services`}>Services</Link>
+                </Menu.Item>
+                <Menu.Item as='a'> 
+                  <Link to={`/contact`}>Contact Us</Link>
+                </Menu.Item>
               </Container>
             </Menu>
           </Segment>

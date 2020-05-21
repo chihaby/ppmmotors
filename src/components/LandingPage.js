@@ -12,7 +12,8 @@ import {
   Segment,
   Sidebar,
   Visibility,
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -92,11 +93,15 @@ class DesktopContainer extends Component {
               size='large'
             >
               <Container>
-                <Menu.Item as='a' active>
-                  Home
+                <Menu.Item as='a'>
+                <Link to={`/`}>Home</Link>
                 </Menu.Item>
-                <Menu.Item as='a'>Services</Menu.Item>
-                <Menu.Item as='a'>Contact Us</Menu.Item>
+                <Menu.Item as='a'>
+                  <Link to={`/services`}>Services</Link>
+                </Menu.Item>
+                <Menu.Item as='a'> 
+                  <Link to={`/contact`}>Contact Us</Link>
+                </Menu.Item>
                 <Menu.Item position='right'>
                   <Button as='a' inverted={!fixed} onClick={signInWithGoogle}>
                     Log in
@@ -127,7 +132,7 @@ class MobileContainer extends Component {
 
   render() {
     const { children } = this.props
-    const { sidebarOpened } = this.state
+    const { sidebarOpened, fixed } = this.state
 
     return (
       <Responsive
@@ -143,12 +148,20 @@ class MobileContainer extends Component {
           vertical
           visible={sidebarOpened}
         >
-          <Menu.Item as='a' active>
-            Home
+          <Menu.Item as='a'>
+          <Link to={`/`}>Home</Link>
           </Menu.Item>
-          <Menu.Item as='a'>Services</Menu.Item>
-          <Menu.Item as='a'>Contact Us</Menu.Item>
-          <Menu.Item as='a'>Log in</Menu.Item>
+          <Menu.Item as='a'>
+            <Link to={`/services`}>Services</Link>
+          </Menu.Item>
+          <Menu.Item as='a'> 
+            <Link to={`/contact`}>Contact Us</Link>
+          </Menu.Item>
+          <Menu.Item position='right'>
+            <Button as='a' inverted={!fixed} onClick={signInWithGoogle}>
+              Log in
+            </Button>
+          </Menu.Item>
         </Sidebar>
 
         <Sidebar.Pusher dimmed={sidebarOpened}>

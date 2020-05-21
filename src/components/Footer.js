@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, List, Header, Segment, Container } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 export const Footer = () => (
 
@@ -8,10 +9,20 @@ export const Footer = () => (
         <Grid divided inverted stackable>
           <Grid.Row>
             <Grid.Column width={3}>
-              <Header inverted as='h4' content='About' />
               <List link inverted>
-                <List.Item as='a'>Services</List.Item>
-                <List.Item as='a'>Contact Us</List.Item>
+                <Link to={`/`}>
+                  <Header inverted as='h6' content='Home' />
+                </Link>
+              </List>
+              <List link inverted>
+                <Link to={`/services`}>
+                  <Header inverted as='h6' content='Services' />
+                </Link>
+              </List>
+              <List>
+                <Link to={`/contact`}>
+                  <Header inverted as='h6' content='Contact Us' />
+                </Link>
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
@@ -25,10 +36,11 @@ export const Footer = () => (
             </Grid.Column>
             <Grid.Column width={7}>
               <Header as='h4' inverted>
-                Footer Header
+                Contact Us
               </Header>
               <p>
-                Extra space for a call to action inside the footer that could help re-engage users.
+                Phone: (316) 364-4692 <br />
+                email: @gmail.com
               </p>
             </Grid.Column>
           </Grid.Row>
