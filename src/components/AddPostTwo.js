@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
-
-const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '',  random: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
+var i;
+const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '', random: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
 class AddPostTwo extends Component {
   state = initialState;
 
@@ -19,7 +19,6 @@ class AddPostTwo extends Component {
   handleMainUpload = e => {
     e.preventDefault(); 
     const { image, imageName } = this.state;
-    console.log('imageName ', imageName)
     const uploadTask = storage.ref(`images/${imageName}`).put(image);
     uploadTask.on(
       "state_changed",
@@ -81,8 +80,6 @@ class AddPostTwo extends Component {
             urls.push(url);
             this.setState({ url, urls, random });
           })
-          console.log('random', random)
-          console.log('file-name',file.name)
       })
     )
   }
@@ -144,16 +141,28 @@ class AddPostTwo extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+  
     const isValid = this.validate();
     if (isValid) {
-      const { year, make, model, vin, url, urls, mainUrl, imageName, random, price, progress, odometer, transmition, cylinders, description } = this.state;
+      const { year, make, model, vin, url, urls, mainUrl, imageName, random, file, price, progress, odometer, transmition, cylinders, description } = this.state;
       const { uid, displayName, email } = auth.currentUser || {};
+      console.log('file ', file)
+      const files = [];
+      // const fileName = file.name;
+      
+      for (i=0; i<file.length; i++){
+        files.push(file[i].name);
+      }
+      this.setState( { files })
+      console.log('files ', files)
+  
       const post = {
         year,
         make,
         model,
         imageName,
         random,
+        files,
         url,
         urls,
         mainUrl,

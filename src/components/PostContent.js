@@ -9,24 +9,24 @@ const belongsToCurrentUser = (currentUser) => {
   return currentUser.uid;
 }
 
-const PostContent = ({ id, year, make, model, urls, mainUrl, user, imageName, random, file, fileName, odometer, transmition, cylinders, vin, price, description }) => {
+const PostContent = ({ id, year, make, model, urls, mainUrl, user, imageName, random, file, files, odometer, transmition, cylinders, vin, price, description }) => {
 
   const currentUser = useContext(UserContext);
   const postRef = firestore.doc(`posts/${id}`);
   const storageRef = storage.ref();
   const imageRef = storageRef.child(`images/${imageName}`);
   const fileRef = storageRef.child(`images/${random}`);
-  
-  console.log('imageName: ', imageName)
-  console.log('random ', random)
-  console.log('fileName ', file)
+
+  console.log('file ', file)
+  console.log('files ', files)
+
 
 const remove = () => {
   postRef.delete();
   imageRef.delete().catch((error) => {
     console.error(error)
   });
-  fileRef.forEach(fileName => fileName.delete().catch((error) => {
+  fileRef.forEach(file => file.delete().catch((error) => {
     console.error(error)
   })
   );
