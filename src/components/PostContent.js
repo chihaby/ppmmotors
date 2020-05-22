@@ -9,16 +9,19 @@ const belongsToCurrentUser = (currentUser) => {
   return currentUser.uid;
 }
 
-const PostContent = ({ id, year, make, model, urls, mainUrl, user, imageName, random, files, odometer, transmition, cylinders, vin, price, description }) => {
+const PostContent = ({ id, year, make, model, mainUrl, user, imageName, firstImage, secondImage, thirdImage, firstUrl, secondUrl, thirdUrl, random, files, odometer, transmition, cylinders, vin, price, description }) => {
 
   const currentUser = useContext(UserContext);
   const postRef = firestore.doc(`posts/${id}`);
   const storageRef = storage.ref();
   const imageRef = storageRef.child(`images/${imageName}`);
-  const fileRef0 = storageRef.child(`images/${random}/${files[0]}`);
-  const fileRef1 = storageRef.child(`images/${random}/${files[1]}`);
+  const fileRef0 = storageRef.child(`images/${random}/${firstImage}`);
+  const fileRef1 = storageRef.child(`images/${random}/${secondImage}`);
+  const fileRef2 = storageRef.child(`images/${random}/${thirdImage}`);
 
   console.log('files ', files)
+  console.log('firstImage ', firstImage)
+  console.log('secondImage ', secondImage)
 
 
 const remove = () => {
@@ -30,6 +33,9 @@ const remove = () => {
     console.error(error)
   });
   fileRef1.delete().catch((error) => {
+    console.error(error)
+  });
+  fileRef2.delete().catch((error) => {
     console.error(error)
   });
 }
@@ -46,15 +52,10 @@ const remove = () => {
 
         <div>
           <Image.Group>
-          <Image src={mainUrl} alt="" size='medium'/> 
-            <Image src={urls[0]} alt="img" size='medium'/>   
-            <Image src={urls[1]} alt="img" size='medium'/>
-            <Image src={urls[2]} alt="img" size='medium'/>
-            <Image src={urls[3]} alt="" size='medium'/>
-            <Image src={urls[4]} alt="" size='medium'/>
-            <Image src={urls[5]} alt="" size='medium'/>      
-            <Image src={urls[6]} alt="" size='medium'/>   
-            <Image src={urls[7]} alt="" size='medium'/>
+            <Image src={mainUrl} alt="" size='medium'/> 
+            <Image src={firstUrl} alt="" size='medium'/>   
+            <Image src={secondUrl} alt="" size='medium'/>
+            <Image src={thirdUrl} alt="" size='medium'/>
           </Image.Group>
         </div>
         <br />

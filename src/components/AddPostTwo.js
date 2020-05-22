@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
-var i;
+
 const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '', random: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
+
 class AddPostTwo extends Component {
   state = initialState;
 
@@ -146,19 +147,38 @@ class AddPostTwo extends Component {
     if (isValid) {
       const { year, make, model, vin, url, urls, mainUrl, imageName, random, file, price, progress, odometer, transmition, cylinders, description } = this.state;
       const { uid, displayName, email } = auth.currentUser || {};
-      console.log('file ', file)
+
+      const firstUrl = urls[0];
+      const secondUrl = urls[1];
+      const thirdUrl = urls[2];
+
       const files = [];
+      var i;
       for (i=0; i<file.length; i++){
         files.push(file[i].name);
       }
-      this.setState( { files })
+      const firstImage = file[0].name;
+      const secondImage = file[1].name;
+      const thirdImage = file[2].name;
+      this.setState( { files, firstImage, secondImage, thirdImage, firstUrl, secondUrl, thirdUrl })
       console.log('files ', files)
+      console.log('firstImage ', firstImage)
+      console.log('secondImage ', secondImage)
+
+      console.log('urls ', urls)
+
   
       const post = {
         year,
         make,
         model,
         imageName,
+        firstImage,
+        secondImage,
+        thirdImage,
+        firstUrl,
+        secondUrl,
+        thirdUrl,
         random,
         files,
         url,
@@ -182,6 +202,9 @@ class AddPostTwo extends Component {
       firestore.collection('backup').add(post);
       this.setState({ initialState });
     };
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   render() {
@@ -193,7 +216,7 @@ class AddPostTwo extends Component {
             <Advertisement unit='banner' centered test='Salam ô Alikom!' /><br />
             <Message.Header>For consistency and better use</Message.Header>
               <p>
-                {'\u2022'} Upload a total of 8 photos<br />
+                {'\u2022'} Upload a total of 4 photos<br />
                 {'\u2022'} all photos must be in landscape view.<br />
                 {'\u2022'} Make sure all fields are checked.<br />
                 {'\u2022'} Refresh the page after every submition.<br />
@@ -202,7 +225,7 @@ class AddPostTwo extends Component {
           </Message> 
           <Divider/>
             <Progress percent={mainProgress} indicating />
-            <Header as='h3' >Main photo</Header>
+            <Header as='h3' >1 Main photo</Header>
             <input type="file" required multiple onChange={this.handleMainUploadChange} />
             <div style={{textAlign: 'center'}}>
               <Image src={mainUrl} alt='' size='medium' bordered />
@@ -218,7 +241,7 @@ class AddPostTwo extends Component {
           <Divider/>
           <Divider/>
             <Progress percent={progress} indicating />
-            <Header as='h3'>More photos </Header>
+            <Header as='h3'>3 More photos </Header>
             <input type="file" required multiple onChange={this.handleUploadChange} />
             <br />
           <Image.Group size='small'>
@@ -238,31 +261,6 @@ class AddPostTwo extends Component {
               src={urls[2]}
               alt=""
             /> 
-            <Image 
-              size='small'
-              src={urls[3]}
-              alt=""
-            />
-            <Image 
-              size='small'
-              src={urls[4]}
-              alt=""
-            /> 
-            <Image 
-              size='small'
-              src={urls[5]}
-              alt=""
-            />      
-            <Image 
-              size='small'
-              src={urls[6]}
-              alt=""
-            /> 
-            <Image 
-              size='small'
-              src={urls[7]}
-              alt=""
-            />                    
         </Image.Group>
 
         <br />

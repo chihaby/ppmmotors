@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {Container, Image, Button, Card, Label } from 'semantic-ui-react';
 
-const Post = ({ id, make, year, model, price, urls, url, mainUrl }) => { 
+const Post = ({ id, make, year, model, price, mainUrl }) => { 
 
   return (
       <Container>
