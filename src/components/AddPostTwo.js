@@ -148,8 +148,6 @@ class AddPostTwo extends Component {
       const { uid, displayName, email } = auth.currentUser || {};
       console.log('file ', file)
       const files = [];
-      // const fileName = file.name;
-      
       for (i=0; i<file.length; i++){
         files.push(file[i].name);
       }

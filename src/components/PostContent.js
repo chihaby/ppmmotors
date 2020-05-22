@@ -9,15 +9,15 @@ const belongsToCurrentUser = (currentUser) => {
   return currentUser.uid;
 }
 
-const PostContent = ({ id, year, make, model, urls, mainUrl, user, imageName, random, file, files, odometer, transmition, cylinders, vin, price, description }) => {
+const PostContent = ({ id, year, make, model, urls, mainUrl, user, imageName, random, files, odometer, transmition, cylinders, vin, price, description }) => {
 
   const currentUser = useContext(UserContext);
   const postRef = firestore.doc(`posts/${id}`);
   const storageRef = storage.ref();
   const imageRef = storageRef.child(`images/${imageName}`);
-  const fileRef = storageRef.child(`images/${random}`);
+  const fileRef0 = storageRef.child(`images/${random}/${files[0]}`);
+  const fileRef1 = storageRef.child(`images/${random}/${files[1]}`);
 
-  console.log('file ', file)
   console.log('files ', files)
 
 
@@ -26,10 +26,12 @@ const remove = () => {
   imageRef.delete().catch((error) => {
     console.error(error)
   });
-  fileRef.forEach(file => file.delete().catch((error) => {
+  fileRef0.delete().catch((error) => {
     console.error(error)
-  })
-  );
+  });
+  fileRef1.delete().catch((error) => {
+    console.error(error)
+  });
 }
 
   return (
@@ -45,9 +47,9 @@ const remove = () => {
         <div>
           <Image.Group>
           <Image src={mainUrl} alt="" size='medium'/> 
-            <Image src={urls[0]} alt="" size='medium'/>   
-            <Image src={urls[1]} alt="" size='medium'/>
-            <Image src={urls[2]} alt="" size='medium'/>
+            <Image src={urls[0]} alt="img" size='medium'/>   
+            <Image src={urls[1]} alt="img" size='medium'/>
+            <Image src={urls[2]} alt="img" size='medium'/>
             <Image src={urls[3]} alt="" size='medium'/>
             <Image src={urls[4]} alt="" size='medium'/>
             <Image src={urls[5]} alt="" size='medium'/>      
