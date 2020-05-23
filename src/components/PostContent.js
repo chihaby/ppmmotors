@@ -19,11 +19,6 @@ const PostContent = ({ id, year, make, model, mainUrl, user, imageName, firstIma
   const fileRef1 = storageRef.child(`images/${random}/${secondImage}`);
   const fileRef2 = storageRef.child(`images/${random}/${thirdImage}`);
 
-  console.log('files ', files)
-  console.log('firstImage ', firstImage)
-  console.log('secondImage ', secondImage)
-
-
 const remove = () => {
   postRef.delete();
   imageRef.delete().catch((error) => {

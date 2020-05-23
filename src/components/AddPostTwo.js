@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '', random: '', year: '', make: '', model: '', vin: '', description:'', note: '', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
+const initialState = { urls: [], url: '',  mainUrl: '',  mainProgress: '', random: '', year: '', make: '', model: '', vin: '', description:'', note: '', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
 
 class AddPostTwo extends Component {
   state = initialState;
@@ -157,7 +157,7 @@ class AddPostTwo extends Component {
       for (i=0; i<file.length; i++){
         files.push(file[i].name);
       }
-      
+
       const firstImage = file[0].name;
       const secondImage = file[1].name;
       const thirdImage = file[2].name;
@@ -197,9 +197,6 @@ class AddPostTwo extends Component {
       firestore.collection('backup').add(post);
       this.setState({ initialState });
     };
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
   };
 
   render() {
@@ -212,9 +209,9 @@ class AddPostTwo extends Component {
             <Message.Header>For consistency and better use</Message.Header>
               <p>
                 {'\u2022'} Upload a total of 4 photos<br />
-                {'\u2022'} all photos must be in landscape view.<br />
+                {'\u2022'} All photos must be in landscape view.<br />
                 {'\u2022'} Make sure all fields are checked.<br />
-                {'\u2022'} Refresh the page after every submition.<br />
+                {'\u2022'} Refresh the page after each submition<br />
                 {'\u2022'} Don't forget to logout<br />
               </p>
           </Message> 
@@ -410,7 +407,10 @@ class AddPostTwo extends Component {
               </TextArea>
             </Form.Field>
 
-            <Button className="ui primary button" type="submit" value="Create Post" size='huge'>Submit</Button>
+            <Button className="ui primary button" value="Create Post" size='huge'>Submit</Button>
+            <Message negative>
+              <Message.Header>Refresh the page after each submition</Message.Header>
+            </Message>
           </Form>
         </div>
       </div>
