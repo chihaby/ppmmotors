@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { Progress, Header, Button, Form, TextArea, Image, Divider, Label, Input, Message, Advertisement } from 'semantic-ui-react';
 
-const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '', random: '', year: '', make: '', model: '', vin: '', description:'', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
+const initialState = { urls: [], url: '',  mainUrl: '', mainProgress: '', random: '', year: '', make: '', model: '', vin: '', description:'', note: '', price: '', odometer: '', progress: 0, titleError: '', odometerError: '', vinError: '', urlError: '', mainUrlError: '' };
 
 class AddPostTwo extends Component {
   state = initialState;
@@ -145,7 +145,7 @@ class AddPostTwo extends Component {
   
     const isValid = this.validate();
     if (isValid) {
-      const { year, make, model, vin, url, urls, mainUrl, imageName, random, file, price, progress, odometer, transmition, cylinders, description } = this.state;
+      const { year, make, model, vin, url, urls, mainUrl, imageName, random, file, price, odometer, transmition, cylinders, description, note } = this.state;
       const { uid, displayName, email } = auth.currentUser || {};
 
       const firstUrl = urls[0];
@@ -157,16 +157,11 @@ class AddPostTwo extends Component {
       for (i=0; i<file.length; i++){
         files.push(file[i].name);
       }
+      
       const firstImage = file[0].name;
       const secondImage = file[1].name;
       const thirdImage = file[2].name;
       this.setState( { files, firstImage, secondImage, thirdImage, firstUrl, secondUrl, thirdUrl })
-      console.log('files ', files)
-      console.log('firstImage ', firstImage)
-      console.log('secondImage ', secondImage)
-
-      console.log('urls ', urls)
-
   
       const post = {
         year,
@@ -190,7 +185,7 @@ class AddPostTwo extends Component {
         transmition,
         cylinders,
         description,
-        progress,
+        note,
           user: {
           uid,
           displayName,

@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { firestore, storage } from '../firebase';
 import { UserContext } from '../providers/UserProvider';
 import { Link } from 'react-router-dom';
-import { Header, Image, Segment, Icon, Grid, Menu, Divider } from 'semantic-ui-react';
+import { Header, Image, Segment, Icon, Grid, Menu, Divider, Message } from 'semantic-ui-react';
 
 const belongsToCurrentUser = (currentUser) => {
   if(!currentUser) return false;
   return currentUser.uid;
 }
 
-const PostContent = ({ id, year, make, model, mainUrl, user, imageName, firstImage, secondImage, thirdImage, firstUrl, secondUrl, thirdUrl, random, files, odometer, transmition, cylinders, vin, price, description }) => {
+const PostContent = ({ id, year, make, model, mainUrl, user, imageName, firstImage, secondImage, thirdImage, firstUrl, secondUrl, thirdUrl, random, files, odometer, transmition, cylinders, vin, price, description, note }) => {
 
   const currentUser = useContext(UserContext);
   const postRef = firestore.doc(`posts/${id}`);
@@ -82,17 +82,17 @@ const remove = () => {
         <br />
 
         <Divider />
-          <div style={{textAlign: 'center'}}>
-            <Segment color='grey'>Private notes :</Segment>
             <div>
               {belongsToCurrentUser(currentUser, user) && (
-                <div>
+                <div style={{textAlign: 'center'}}>
+                  <Message negative>
+                    <Message.Header>Private Notes</Message.Header>
+                    <p>{note}</p>
+                  </Message>
                   <button className="ui negative button" onClick={remove}>Delete Listing</button>
                 </div>
               )}
-            </div>
           </div>
-        <Divider />
       </>
   );
 };
