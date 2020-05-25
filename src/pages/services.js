@@ -1,5 +1,4 @@
 import React from 'react';
-import { LoremIpsum } from "react-lorem-ipsum";
 import { Segment, Icon, Container, Menu, Responsive, Header, Visibility,  } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -51,10 +50,8 @@ const Services = () => {
     </Segment>
     
     <Container>
-    <Header as='h2'>Services</Header>
-    <LoremIpsum
-      p={8}
-    />
+      <Header as='h2'>Services</Header>
+      <p>Comming soon.</p><br />
     </Container>
     </div>
   )}

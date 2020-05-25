@@ -28,10 +28,10 @@ export const Footer = () => (
             <Grid.Column width={3}>
               <Header inverted as='h4' content='Services' />
               <List link inverted>
-                <List.Item as='a'>Banana Pre-Order</List.Item>
-                <List.Item as='a'>DNA FAQ</List.Item>
+                <List.Item as='a'>Comming soon</List.Item>
+                {/* <List.Item as='a'>DNA FAQ</List.Item>
                 <List.Item as='a'>How To Access</List.Item>
-                <List.Item as='a'>Favorite X-Men</List.Item>
+                <List.Item as='a'>Favorite X-Men</List.Item> */}
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
@@ -40,7 +40,8 @@ export const Footer = () => (
               </Header>
               <p>
                 Phone: (316) 364-4692 <br />
-                email: @gmail.com
+                Email: parkplaza19@gmail.com <br />
+                Address: 6159 N Broadway, Park City, KS 67219.
               </p>
             </Grid.Column>
           </Grid.Row>

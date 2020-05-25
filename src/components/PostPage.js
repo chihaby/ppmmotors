@@ -35,6 +35,16 @@ const HomepageHeading = ({ mobile }) => (
     />
     <Header
       as='h2'
+      content='(316) 364-4692'
+      inverted
+      style={{
+        fontSize: mobile ? '1.5em' : '1.7em',
+        fontWeight: 'normal',
+        marginTop: mobile ? '0.5em' : '1.5em',
+      }}
+    />
+    <Header
+      as='h6'
       content='We do not offer financing'
       inverted
       style={{

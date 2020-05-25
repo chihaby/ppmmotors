@@ -1,5 +1,4 @@
 import React from 'react';
-import { LoremIpsum } from "react-lorem-ipsum";
 import { Segment, Icon, Container, Menu, Responsive, Header, Visibility,  } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -51,10 +50,10 @@ const Contact = () => {
       </Segment>  
 
       <Container>   
-        <Header as='h2'>Contact Us</Header>
-        <LoremIpsum
-          p={4}
-      />
+        <Header as='h1'>Contact Us</Header>
+        <Header as='h3' color='blue'> {'\u2022'} Phone: (316) 364-4692</Header>
+        <Header as='h3'color='blue'> {'\u2022'} Email: parkplaza19@gmail.com</Header>
+        <Header as='h3'color='blue'> {'\u2022'} Address: 6159 N Broadway Park City, Kansas 67219</Header><br /><br />
     </Container>
     </div>
   )}
