@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import CurrentUser from './CurrentUser';
 import SignIn from './SignIn';
 import { UserContext } from '../providers/UserProvider';
-import AddPostTwo from './AddPostTwo';
+import AddPost from './AddPost';
 
 const Authentication = ({ loading }) => {
 
@@ -11,7 +11,7 @@ const Authentication = ({ loading }) => {
 
   return <div style={{backgroundColor: '#D3D3D3', margin: '20px'}}>{user ? <div>
         <CurrentUser {...user}/>
-        <AddPostTwo />
+        <AddPost />
       </div> : <SignIn />}</div>;
 };
 

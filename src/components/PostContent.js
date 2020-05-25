@@ -9,12 +9,12 @@ const belongsToCurrentUser = (currentUser) => {
   return currentUser.uid;
 }
 
-const PostContent = ({ id, year, make, model, mainUrl, user, imageName, firstImage, secondImage, thirdImage, firstUrl, secondUrl, thirdUrl, random, files, odometer, transmition, cylinders, vin, price, description, note }) => {
+const PostContent = ({ id, year, make, model, mainUrl, user, imageName, firstImage, secondImage, thirdImage, firstUrl, secondUrl, thirdUrl, random, randomMain, odometer, transmition, cylinders, vin, price, description, note }) => {
 
   const currentUser = useContext(UserContext);
   const postRef = firestore.doc(`posts/${id}`);
   const storageRef = storage.ref();
-  const imageRef = storageRef.child(`images/${imageName}`);
+  const imageRef = storageRef.child(`images/${randomMain}/${imageName}`);
   const fileRef0 = storageRef.child(`images/${random}/${firstImage}`);
   const fileRef1 = storageRef.child(`images/${random}/${secondImage}`);
   const fileRef2 = storageRef.child(`images/${random}/${thirdImage}`);
