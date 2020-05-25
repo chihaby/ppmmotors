@@ -118,7 +118,7 @@ class AddPostTwo extends Component {
       priceError = ' Price can not be blank'
     }
     if (!this.state.url) {
-      urlError = 'Images not saved '
+      urlError = 'Photos not saved '
     }
     if (!this.state.vin) {
       vinError = 'Vin number can not be empty '
@@ -134,6 +134,7 @@ class AddPostTwo extends Component {
     }
 
     if ( mainUrlError || yearError || makeError ||modelError ||priceError || urlError || priceError || vinError || odometerError || transmitionError || cylindersError ){
+      alert('Missing entries');
       this.setState({ yearError, makeError, modelError, priceError, mainUrlError, urlError, vinError, odometerError, transmitionError, cylindersError });
       return false;
     }
@@ -196,6 +197,7 @@ class AddPostTwo extends Component {
       firestore.collection('posts').add(post);
       firestore.collection('backup').add(post);
       this.setState({ initialState });
+      alert('Posted. Reload page');
     };
   };
 
@@ -222,18 +224,20 @@ class AddPostTwo extends Component {
             <div style={{textAlign: 'center'}}>
               <Image src={mainUrl} alt='' size='medium' bordered />
             </div>
-            <br />
+
+            <Header size='medium' color='violet'>Reminder to save photo</Header>
             <Button color='blue' size='medium'
               onClick={this.handleMainUpload}
             >
             Save 
-          </Button> IF MAIN PICTURE IS NOT SHOWING. CLICK SAVE.
+          </Button>     
+
           <br />
           <div style={{fontSize: 20, color: 'red'}}>{mainUrlError}</div>
           <Divider/>
           <Divider/>
             <Progress percent={progress} indicating />
-            <Header as='h3'>3 More photos </Header>
+            <Header as='h3'>3 More photos  </Header>
             <input type="file" required multiple onChange={this.handleUploadChange} />
             <br />
           <Image.Group size='small'>
@@ -255,12 +259,12 @@ class AddPostTwo extends Component {
             /> 
         </Image.Group>
 
-        <br />
+        <Header size='medium' color='violet'>Reminder to save photos </Header>
         <Button color='blue' size='medium'
           onClick={this.handleUpload}
         >
           Save
-        </Button> IF IMAGES ARE NOT SHOWING. CLICK SAVE.
+        </Button>
           <br />
           <div style={{fontSize: 20, color: 'red'}}>{urlError}</div>
           <Divider/>
@@ -408,9 +412,6 @@ class AddPostTwo extends Component {
             </Form.Field>
 
             <Button className="ui primary button" value="Create Post" size='huge'>Submit</Button>
-            <Message negative>
-              <Message.Header>Refresh the page after each submition</Message.Header>
-            </Message>
           </Form>
         </div>
       </div>

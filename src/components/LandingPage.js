@@ -43,7 +43,7 @@ const HomepageHeading = ({ mobile }) => (
     />
     <Header
       as='h2'
-      content='Your local dealership'
+      content='No Financing Available'
       inverted
       style={{
         fontSize: mobile ? '1.5em' : '1.7em',
