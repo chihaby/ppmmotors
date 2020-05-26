@@ -53,7 +53,7 @@ const HomepageHeading = ({ mobile }) => (
     />
         <Header
       as='h6'
-      content='No Financing Available'
+      content='By Appointment Only'
       inverted
       style={{
         fontSize: mobile ? '1.5em' : '1.7em',
