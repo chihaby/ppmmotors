@@ -11,3 +11,8 @@ What keywords will your audience use to find your website?
 
 prettier
 
+make price label not clickable 
+Ability to edit
+Click on picture instead of info button.
+Add sold option
+Add youtube link
