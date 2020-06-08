@@ -1,14 +1,14 @@
-import React , { Component, createContext } from 'react';
-import { storage } from '../firebase';
+import React, { Component, createContext } from "react";
+import { storage } from "../firebase";
 
 export const ImagesContext = createContext();
 
 class ImagesProvider extends Component {
-  state = { 
+  state = {
     image: null,
     url: "",
     progress: 0
-  }
+  };
 
   unsubscribeFromStorage = null;
 
@@ -37,26 +37,23 @@ class ImagesProvider extends Component {
           .then(url => {
             this.setState({ url });
           });
-          console.log("url: ",this.state.url)
+        console.log("url: ", this.state.url);
       }
     );
-  }
+  };
 
   componentWillUnmount = () => {
     this.unsubscribeFromStorage();
+  };
+
+  render() {
+    const { url } = this.state;
+    const { children } = this.props;
+
+    return (
+      <ImagesContext.Provider value={url}>{children}</ImagesContext.Provider>
+    );
   }
-
-    render() {
-      const { url } = this.state;
-      const { children } = this.props;
-
-      return (
-        <ImagesContext.Provider value={url}>
-          {children}
-        </ImagesContext.Provider>
-      )
-    }
-
 }
 
 export default ImagesProvider;

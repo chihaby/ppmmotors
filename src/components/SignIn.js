@@ -1,8 +1,12 @@
-import React from 'react';
-import { signInWithGoogle } from '../firebase';
+import React from "react";
+import { signInWithGoogle } from "../firebase";
 
 function SignIn() {
-  return <button style={{display: 'none' }}onClick={signInWithGoogle}>Sign In</button>
+  return (
+    <button style={{ display: "none" }} onClick={signInWithGoogle}>
+      Sign In
+    </button>
+  );
 }
 
 export default SignIn;
