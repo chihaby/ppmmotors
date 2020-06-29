@@ -6,7 +6,7 @@ import "firebase/storage";
 // initialize database
 
 const config = {
-  apiKey: "AIzaSyDXGolJhF9x6lB9ZQnMUzwQ-bf9rBVLodg",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "parkplaza-f30ab.firebaseapp.com",
   databaseURL: "https://parkplaza-f30ab.firebaseio.com",
   projectId: "parkplaza-f30ab",

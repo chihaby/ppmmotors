@@ -16,3 +16,5 @@ Ability to edit
 Click on picture instead of info button.
 Add sold option
 Add youtube link
+
+npm install --save-dev dotenv
