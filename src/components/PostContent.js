@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { firestore, storage } from "../firebase";
 import { UserContext } from "../providers/UserProvider";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import {
   Header,
@@ -131,6 +132,16 @@ const PostContent = ({
           </div>
         )}
       </div>
+
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Used cars park city kansas</title>
+        <meta
+          name="description"
+          content={`Pre owned vehicles ${year} ${make} ${model} ${vin} ${description} ${price}`}
+        />
+        <link rel="canonical" href="https://ppmmotors.com/" />
+      </Helmet>
     </>
   );
 };

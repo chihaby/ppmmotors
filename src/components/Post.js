@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Container, Image, Button, Card, Label } from "semantic-ui-react";
 
@@ -22,6 +23,15 @@ const Post = ({ id, make, year, model, price, mainUrl }) => {
           </Link>
         </Card.Content>
       </Card>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Used cars park city kansas</title>
+        <meta
+          name="description"
+          content={`Pre owned vehicles ${year} ${make} ${model}`}
+        />
+        <link rel="canonical" href="https://ppmmotors.com/" />
+      </Helmet>
     </Container>
   );
 };

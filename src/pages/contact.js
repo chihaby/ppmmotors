@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import {
   Segment,
   Icon,
@@ -68,6 +69,15 @@ const Contact = () => {
         <br />
         <br />
       </Container>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>contact us</title>
+        <meta
+          name="description"
+          content={`Contact us (316) 364-4692 park plaza motors`}
+        />
+        <link rel="canonical" href="https://ppmmotors.com/contact" />
+      </Helmet>
     </div>
   );
 };

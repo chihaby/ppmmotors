@@ -15,6 +15,7 @@
     "react-border-wrapper": "^1.0.3",
     "react-dom": "^16.13.0",
     "react-feather": "^2.0.3",
+    "react-helmet": "^6.1.0",
     "react-lorem-ipsum": "^1.4.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
