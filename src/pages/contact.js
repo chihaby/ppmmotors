@@ -40,6 +40,7 @@ const Contact = () => {
                 <Menu.Item as="a">
                   <Link to={`/contact`}>Contact Us</Link>
                 </Menu.Item>
+                <Menu.Item>Web Master: Radouane Chihaby</Menu.Item>
               </Container>
             </Menu>
           </Segment>
@@ -53,19 +54,19 @@ const Contact = () => {
       </Segment>
 
       <Container>
-        <Header as="h1">Contact Us</Header>
-        <Header as="h3" color="blue">
+        {/* <Header as="h1">Contact Us</Header> */}
+        {/* <Header as="h3" color="blue">
           {" "}
           {"\u2022"} Phone: (316) 364-4692
-        </Header>
+        </Header> */}
         <Header as="h3" color="blue">
           {" "}
-          {"\u2022"} Email: parkplaza19@gmail.com
+          {/* {"\u2022"} Email: webb.ddev@gmail.com */}
         </Header>
-        <Header as="h3" color="blue">
+        {/* <Header as="h3" color="blue">
           {" "}
           {"\u2022"} Address: 6159 N Broadway Park City, Kansas 67219
-        </Header>
+        </Header>  */}
         <br />
         <br />
       </Container>
@@ -74,7 +75,7 @@ const Contact = () => {
         <title>contact us</title>
         <meta
           name="description"
-          content={`Contact us (316) 364-4692 park plaza motors`}
+          content={`Contact us park plaza motors in Park City Kansas`}
         />
         <link rel="canonical" href="https://ppmmotors.com/contact" />
       </Helmet>
