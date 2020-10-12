@@ -28,6 +28,7 @@ export const Footer = () => (
             <Header inverted as="h4" content="Web Master" />
             <List link inverted>
               <List.Item as="a">Radouane Chihaby</List.Item>
+              <List.Item as="a">Email: chihaby@gmail.com</List.Item>
               {/* <List.Item as='a'>DNA FAQ</List.Item>
                 <List.Item as='a'>How To Access</List.Item>
                 <List.Item as='a'>Favorite X-Men</List.Item> */}

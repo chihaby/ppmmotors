@@ -70,8 +70,13 @@ const PostContent = ({
   return (
     <>
       <Segment color="teal" style={{ textAlign: "center" }}>
-        <Link to={`/`}>
-          <Icon name="home" size="big" color="teal" />
+        <Link to={`/`} size={70}>
+          {/* <Icon name="home" size="big" color="teal" /> */}
+
+          <h2>
+            {" "}
+            <strong>{"<<  "}Go back to homepage</strong>
+          </h2>
         </Link>
       </Segment>
 

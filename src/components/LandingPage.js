@@ -114,6 +114,7 @@ class DesktopContainer extends Component {
                 <Menu.Item position="right">
                   Web Master: Radouane Chihaby
                 </Menu.Item>
+                <Menu.Item position="right">Email: chihaby@gmail.com</Menu.Item>
                 <Menu.Item position="right">
                   <Button as="a" inverted={!fixed} onClick={signInWithGoogle}>
                     Log in
@@ -170,6 +171,7 @@ class MobileContainer extends Component {
             <Link to={`/contact`}>Contact Us</Link>
           </Menu.Item>
           <Menu.Item position="right">Web master: Radouane Chihaby</Menu.Item>
+          <Menu.Item position="right">Email: chihaby@gmail.com</Menu.Item>
           <Menu.Item position="right">
             <Button inverted={!fixed} onClick={signInWithGoogle}>
               Log in
