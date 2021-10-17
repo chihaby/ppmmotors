@@ -7,7 +7,6 @@ import {
   Header,
   Image,
   Segment,
-  Icon,
   Grid,
   Menu,
   Divider,

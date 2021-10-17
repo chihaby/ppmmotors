@@ -42,7 +42,7 @@ const HomepageHeading = ({ mobile }) => (
     />
     <Header
       as="h2"
-      content="By Appointment Only"
+      content="Used Vehicles for Sale"
       inverted
       style={{
         fontSize: mobile ? "1.5em" : "1.7em",
@@ -52,7 +52,7 @@ const HomepageHeading = ({ mobile }) => (
     />
     {/* <Header
       as="h6"
-      content="webb.ddev@gmail.com"
+      content="(316) 364-4692"
       inverted
       style={{
         fontSize: mobile ? "1.5em" : "1.7em",
@@ -112,10 +112,6 @@ class DesktopContainer extends Component {
                   <Link to={`/contact`}>Contact Us</Link>
                 </Menu.Item>
                 <Menu.Item position="right">
-                  Web Master: Radouane Chihaby
-                </Menu.Item>
-                <Menu.Item position="right">Email: chihaby@gmail.com</Menu.Item>
-                <Menu.Item position="right">
                   <Button as="a" inverted={!fixed} onClick={signInWithGoogle}>
                     Log in
                   </Button>
@@ -170,8 +166,6 @@ class MobileContainer extends Component {
           <Menu.Item>
             <Link to={`/contact`}>Contact Us</Link>
           </Menu.Item>
-          <Menu.Item position="right">Web master: Radouane Chihaby</Menu.Item>
-          <Menu.Item position="right">Email: chihaby@gmail.com</Menu.Item>
           <Menu.Item position="right">
             <Button inverted={!fixed} onClick={signInWithGoogle}>
               Log in

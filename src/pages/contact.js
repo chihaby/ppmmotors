@@ -57,7 +57,7 @@ const Contact = () => {
         <br />
       </Container>
       <Container>
-        {/* <Header as="h1">Contact Us</Header> */}
+        <Header as="h1">Contact Us</Header>
         {/* <Header as="h3" color="blue">
           {" "}
           {"\u2022"} Phone: (316) 364-4692
@@ -66,10 +66,10 @@ const Contact = () => {
           {" "}
           {"\u2022"} Email: webb.ddev@gmail.com
         </Header> */}
-        {/* <Header as="h3" color="blue">
+        <Header as="h3" color="blue">
           {" "}
-          {"\u2022"} Address: 6159 N Broadway Park City, Kansas 67219
-        </Header>  */}
+          {/* {"\u2022"} Address: 6159 N Broadway Park City, Kansas 67219 */}
+        </Header>
       </Container>
       <Helmet>
         <meta charSet="utf-8" />

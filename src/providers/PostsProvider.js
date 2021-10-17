@@ -13,7 +13,7 @@ class PostsProvider extends Component {
 
   componentDidMount = async () => {
     this.unsubscribeFromFirestore = firestore
-      .collection("posts")
+      .collection("backup")
       .orderBy("createdAt", "desc")
       .onSnapshot(snapshot => {
         const posts = snapshot.docs.map(collectIdsAndDocs);
